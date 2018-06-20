@@ -9,15 +9,23 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 import { Switch, Route } from 'react-router-dom'
-
-function ResearchList(props) {
-  return <h1>ResearchList</h1>;
-}
+import ResearchList from './ResearchList'
 
 function GoalsList(props) {
   return <h1>GoalsList,</h1>;
 }
 
+function StepsList(props) {
+  return <h1>StepsList,</h1>;
+}
+
+function ResultsList(props) {
+  return <h1>StepsList,</h1>;
+}
+
+function FeedbacksList(props) {
+  return <h1>Feedback list,</h1>;
+}
 
 const drawerWidth = 240;
 
@@ -74,6 +82,9 @@ function App(props) {
         <Switch>
           <Route exact path='/research-list' component={ResearchList}/>
           <Route path='/goals-list' component={GoalsList}/>
+          <Route path='/steps-list' component={StepsList}/>
+          <Route path='/results-list' component={ResultsList}/>
+          <Route path='/feedbacks-list' component={FeedbacksList}/>
         </Switch>
       </main>
     </div>

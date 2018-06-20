@@ -28,34 +28,30 @@ export const mailFolderListItems = (
       <ListItemText primary="Goals List" />
     </ListItem>
 
-    <ListItem button>
+    <ListItem component={Link} to="/steps-list">
       <ListItemIcon>
         <ViewListIcon />
       </ListItemIcon>
-      <ListItemText primary="Steps" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <StarIcon />
-      </ListItemIcon>
-      <ListItemText primary="Goals" />
+      <ListItemText primary="Steps List" />
     </ListItem>
   </div>
 );
 
 export const otherMailFolderListItems = (
   <div>
-    <ListItem button>
+    <ListItem component={Link} to="/results-list">
       <ListItemIcon>
-        <ReportIcon />
+        <ViewListIcon />
       </ListItemIcon>
       <ListItemText primary="Results" />
     </ListItem>
-    <ListItem button>
+
+    <ListItem component={Link} to="/feedbacks-list">
       <ListItemIcon>
-        <ReportIcon />
+        <ViewListIcon />
       </ListItemIcon>
       <ListItemText primary="Feedback" />
     </ListItem>
+
   </div>
 );
