@@ -8,6 +8,16 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { mailFolderListItems, otherMailFolderListItems } from './tileData';
+import { Switch, Route } from 'react-router-dom'
+
+function ResearchList(props) {
+  return <h1>ResearchList</h1>;
+}
+
+function GoalsList(props) {
+  return <h1>GoalsList,</h1>;
+}
+
 
 const drawerWidth = 240;
 
@@ -61,7 +71,10 @@ function App(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography noWrap>{'This is the main page to show the'}</Typography>
+        <Switch>
+          <Route exact path='/research-list' component={ResearchList}/>
+          <Route path='/goals-list' component={GoalsList}/>
+        </Switch>
       </main>
     </div>
   );
