@@ -8,16 +8,10 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { mailFolderListItems, otherMailFolderListItems } from './tileData';
-import { Switch, Route } from 'react-router-dom'
-import ResearchList from './ResearchList'
-
-function GoalsList(props) {
-  return <h1>GoalsList,</h1>;
-}
-
-function StepsList(props) {
-  return <h1>StepsList,</h1>;
-}
+import { Switch, Route } from 'react-router-dom';
+import ResearchList from './ResearchList';
+import GoalsList from './GoalsList';
+import StepsList from './StepsList';
 
 function ResultsList(props) {
   return <h1>StepsList,</h1>;
