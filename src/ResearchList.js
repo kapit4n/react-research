@@ -101,11 +101,21 @@ class ResearchList extends React.Component {
     fetch(this.url, fetchData)
       .then(function (response) {
         return response.json();
-      }).then(function (data) {
+      }).then((data) => {
         console.log(data);
-        // reload items
+        this.loadItems();
       });
   };
+
+  removeItem = (itemId) => {
+    console.log(itemId);
+    fetch(this.url + "/" + itemId, { method: 'DELETE'}).then(function (response) {
+      return response.json();
+    }).then((data) => {
+      console.log(data);
+      this.loadItems();
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -120,15 +130,15 @@ class ResearchList extends React.Component {
           />
           <CardContent>
             <Typography gutterBottom variant="headline" component="h3">
-              {item.name}
+              {item.id} : {item.name}
             </Typography>
             <Typography component="p">
               {item.description}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
-              Like
+            <Button size="small" color="primary" onClick={() => this.removeItem(item.id)}>
+              remove
             </Button>
             <Button size="small" color="primary">
               Open
