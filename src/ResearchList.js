@@ -18,7 +18,7 @@ import TextField from '@material-ui/core/TextField';
 
 const styles = {
   card: {
-    maxWidth: 345,
+    maxWidth: 300,
   },
   media: {
     height: 0,
@@ -48,13 +48,33 @@ function Transition(props) {
 } 
 
 class ResearchList extends React.Component {
-  state = {
-    open: false,
-  };
+
+  url = 'http://localhost:3000/api/ResearchProcesses';
+
+  
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      items: []
+    };
+    this.loadItems();
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
   };
+
+  loadItems = () => {
+    fetch(this.url)
+    .then(function (response) {
+      return response.json();
+    }).then( (data) => {
+      console.log(data);
+      this.setState({items: data});
+    });
+  }
 
   handleClose = () => {
     this.setState({ open: false });
@@ -62,68 +82,90 @@ class ResearchList extends React.Component {
 
   handleSave = () => {
     this.setState({ open: false });
-    // Make the request here
-  };
+    // get the new item value
+    let data = {
+      "name": "Research Item 1",
+      "startDate": "2018-06-25T16:22:57.779Z",
+      "endDate": "2018-09-25T16:22:57.779Z",
+      "description": "Research description"
+    }
 
+    let fetchData = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+
+    fetch(this.url, fetchData)
+      .then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        console.log(data);
+        // reload items
+      });
+  };
 
   render() {
     const { classes } = this.props;
+
+    const itemsMap = this.state.items.map((item) => {
+      return (
+        <Card className={classes.card} >
+          <CardMedia
+            className={classes.media}
+            image="/static/images/reptile.jpg"
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="headline" component="h3">
+              {item.name}
+            </Typography>
+            <Typography component="p">
+              {item.description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" color="primary">
+              Like
+            </Button>
+            <Button size="small" color="primary">
+              Open
+            </Button>
+          </CardActions>
+        </Card>
+      )
+    });
     
     return (
       <div>
 
-      <Button variant="fab" className={classes.fab} color='primary' onClick={this.handleClickOpen}>
-        <AddIcon />
-      </Button>
+        <Button variant="fab" className={classes.fab} color='primary' onClick={this.handleClickOpen}>
+          <AddIcon />
+        </Button>
 
+        <Dialog
+          fullScreen
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
+          >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="title" color="inherit" className={classes.flex}> Sound </Typography>
+                <Button color="inherit" onClick={this.handleSave}> save </Button>
+            </Toolbar>
+          </AppBar>
+          <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" />
+          <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" />
+        </Dialog>
 
-      <Dialog
-        fullScreen
-        open={this.state.open}
-        onClose={this.handleClose}
-        TransitionComponent={Transition}
-        >
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex}> Sound </Typography>
-              <Button color="inherit" onClick={this.handleSave}> save </Button>
-          </Toolbar>
-        </AppBar>
-
-        <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" />
-        <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" />
-
-      </Dialog>
-
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/reptile.jpg"
-          title="Contemplative Reptile"
-          />
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-            Lizard
-          </Typography>
-          <Typography component="p">
-            Reseach that discovers the reptile types
-            on bolivia.
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small" color="primary">
-            Like
-          </Button>
-          <Button size="small" color="primary">
-            Open
-          </Button>
-        </CardActions>
-      </Card>
-
-
+        {itemsMap}
+        
       </div>
     );
   }
