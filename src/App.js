@@ -26,9 +26,9 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 430,
+    height: 580,
     zIndex: 1,
-    overflow: 'hidden',
+    overflow: 'scroll',
     position: 'relative',
     display: 'flex',
   },
@@ -40,10 +40,10 @@ const styles = theme => ({
     width: drawerWidth,
   },
   content: {
-    flexGrow: 1,
+    flexGrow: 2,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
-    minWidth: 0, // So the Typography noWrap works
+    minWidth: '75%', // So the Typography noWrap works
   },
   toolbar: theme.mixins.toolbar,
 });
