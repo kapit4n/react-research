@@ -57,9 +57,19 @@ class ResearchList extends React.Component {
     super(props);
     this.state = {
       open: false,
-      items: []
+      items: [],
+      newDescription: "",
+      newName: ""
     };
     this.loadItems();
+  }
+
+  handleChangeDescription = (event) => {
+    this.setState({ newDescription: event.target.value });
+  }
+
+  handleChangeName = (event) => {
+    this.setState({ newName: event.target.value });
   }
 
   handleClickOpen = () => {
@@ -84,11 +94,13 @@ class ResearchList extends React.Component {
     this.setState({ open: false });
     // get the new item value
     let data = {
-      "name": "Research Item 1",
+      "name": this.state.newName,
       "startDate": "2018-06-25T16:22:57.779Z",
       "endDate": "2018-09-25T16:22:57.779Z",
-      "description": "Research description"
+      "description": this.state.newDescription
     }
+
+    this.setState({ newName: "", newDescription: "" });    
 
     let fetchData = {
       method: 'POST',
@@ -169,8 +181,8 @@ class ResearchList extends React.Component {
                 <Button color="inherit" onClick={this.handleSave}> save </Button>
             </Toolbar>
           </AppBar>
-          <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" />
-          <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" />
+          <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" onChange={this.handleChangeName} />
+          <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
         </Dialog>
 
         {itemsMap}
