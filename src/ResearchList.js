@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = {
   card: {
@@ -16,12 +17,22 @@ const styles = {
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
+  fab: {
+    position: 'absolute',
+    top: 65,
+    left: 245,
+  }
 };
 
 function ResearchList(props) {
   const { classes } = props;
   return (
     <div>
+
+      <Button variant="fab" className={classes.fab} color='primary'>
+        <AddIcon />
+      </Button>
+
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
@@ -46,6 +57,8 @@ function ResearchList(props) {
           </Button>
         </CardActions>
       </Card>
+
+
     </div>
   );
 }
