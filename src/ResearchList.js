@@ -12,13 +12,9 @@ import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Slide from '@material-ui/core/Slide';
 import CloseIcon from '@material-ui/icons/Close';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
 import Toolbar from '@material-ui/core/Toolbar';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-
+import TextField from '@material-ui/core/TextField';
 
 const styles = {
   card: {
@@ -38,6 +34,11 @@ const styles = {
   },
   flex: {
     flex: 1,
+  },
+  textField: {
+    marginLeft: 10,
+    marginRight: 10,
+    width: '80%',
   }
 };
 
@@ -47,8 +48,6 @@ function Transition(props) {
 } 
 
 class ResearchList extends React.Component {
-  //const { classes } = props;
-
   state = {
     open: false,
   };
@@ -59,6 +58,11 @@ class ResearchList extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  handleSave = () => {
+    this.setState({ open: false });
+    // Make the request here
   };
 
 
@@ -84,23 +88,14 @@ class ResearchList extends React.Component {
             <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
               <CloseIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex}>
-              Sound
-              </Typography>
-            <Button color="inherit" onClick={this.handleClose}>
-              save
-              </Button>
+            <Typography variant="title" color="inherit" className={classes.flex}> Sound </Typography>
+              <Button color="inherit" onClick={this.handleSave}> save </Button>
           </Toolbar>
         </AppBar>
-        <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-          </ListItem>
-        </List>
+
+        <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" />
+        <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" />
+
       </Dialog>
 
       <Card className={classes.card}>
