@@ -7,22 +7,22 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
 import Slide from '@material-ui/core/Slide';
-import CloseIcon from '@material-ui/icons/Close';
+import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = {
   card: {
-    maxWidth: 300,
+    maxWidth: '80%',
   },
   media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    height: 100,
+    paddingTop: 0, // 16:9
   },
   fab: {
     position: 'absolute',
@@ -50,8 +50,6 @@ function Transition(props) {
 class ResearchList extends React.Component {
 
   url = 'http://localhost:3000/api/ResearchProcesses';
-
-  
 
   constructor(props) {
     super(props);
@@ -177,7 +175,7 @@ class ResearchList extends React.Component {
               <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
                 <CloseIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" className={classes.flex}> Sound </Typography>
+              <Typography variant="title" color="inherit" className={classes.flex}> Create new research process </Typography>
                 <Button color="inherit" onClick={this.handleSave}> save </Button>
             </Toolbar>
           </AppBar>
