@@ -158,10 +158,18 @@ class GoalsList extends React.Component {
       .then(function (response) {
         return response.json();
       }).then((data) => {
-        console.log(data);
         this.loadGoalList();
       });
   };
+
+  removeItem = (itemId) => {
+    fetch(this.researchGoalApi + "/" + itemId, { method: 'DELETE'}).then(function (response) {
+      return response.json();
+    }).then((data) => {
+      this.loadGoalList();
+    });
+  }
+
 
   render() {
     const { classes } = this.props;
@@ -217,16 +225,15 @@ class GoalsList extends React.Component {
               {data.name} <Chip label={data.researchProcess.name} className={classes.chip} />
             </Typography>
             <Typography component="p">
-              {data.description}
-              
+              {data.description}              
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
-              Like
+            <Button size="small" color="primary" onClick={() => this.removeItem(data.id)}>
+              remove
             </Button>
             <Button size="small" color="primary">
-              Open
+              Like
             </Button>
           </CardActions>
         </Card>)
