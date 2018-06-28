@@ -11,12 +11,13 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 
-const styles = {
+const styles = theme => ({
   card: {
     maxWidth: '80%',
   },
@@ -39,8 +40,14 @@ const styles = {
     marginLeft: 10,
     marginRight: 10,
     width: '80%',
-  }
-};
+  },
+  snackbar: {
+    position: 'absolute',
+  },
+  snackbarContent: {
+    width: 360,
+  },
+});
 
 
 function Transition(props) {
@@ -57,7 +64,9 @@ class ResearchList extends React.Component {
       open: false,
       items: [],
       newDescription: "",
-      newName: ""
+      newName: "",
+      newImageUrl: "",
+      openSnack: true
     };
     this.loadItems();
   }
@@ -70,6 +79,10 @@ class ResearchList extends React.Component {
     this.setState({ newName: event.target.value });
   }
 
+  handleChangeImageUrl = (event) => {
+    this.setState({ newImageUrl: event.target.value });
+  }
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -79,7 +92,6 @@ class ResearchList extends React.Component {
     .then(function (response) {
       return response.json();
     }).then( (data) => {
-      console.log(data);
       this.setState({items: data});
     });
   }
@@ -87,18 +99,23 @@ class ResearchList extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  
+  handleCloseSnack = () => {
+    this.setState({ openSnack: false });
+  };
 
   handleSave = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, openSnack: true });
     // get the new item value
     let data = {
       "name": this.state.newName,
+      "imageUrl": this.state.newImageUrl,
       "startDate": "2018-06-25T16:22:57.779Z",
       "endDate": "2018-09-25T16:22:57.779Z",
       "description": this.state.newDescription
     }
 
-    this.setState({ newName: "", newDescription: "" });    
+    this.setState({ newName: "", newDescription: "", newImageUrl: "" });    
 
     let fetchData = {
       method: 'POST',
@@ -132,10 +149,10 @@ class ResearchList extends React.Component {
 
     const itemsMap = this.state.items.map((item) => {
       return (
-        <Card className={classes.card} >
+        <Card className={classes.card} key={item.id}>
           <CardMedia
             className={classes.media}
-            image="/static/images/reptile.jpg"
+            image={item.imageUrl}
             title="Contemplative Reptile"
           />
           <CardContent>
@@ -180,11 +197,27 @@ class ResearchList extends React.Component {
             </Toolbar>
           </AppBar>
           <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" onChange={this.handleChangeName} />
+          <TextField required id="required" label="Image Url" className={classes.textField} margin="normal" onChange={this.handleChangeImageUrl} />
           <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
         </Dialog>
 
         {itemsMap}
-        
+        <Snackbar
+          open={this.state.openSnack}
+          autoHideDuration={4000}
+          onClose={this.handleCloseSnack}
+          ContentProps={{
+            'aria-describedby': 'snackbar-fab-message-id',
+            className: classes.snackbarContent,
+          }}
+          message={<span id="snackbar-fab-message-id">Archived</span>}
+          action={
+            <Button color="inherit" size="small" onClick={this.handleCloseSnack}>
+              Undo
+              </Button>
+          }
+          className={classes.snackbar}
+        />        
       </div>
     );
   }

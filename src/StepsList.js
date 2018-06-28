@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const styles = {
+const styles = theme =>({
   card: {
     maxWidth: 345,
   },
@@ -16,7 +16,7 @@ const styles = {
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-};
+});
 
 function StepsList(props) {
   const { classes } = props;

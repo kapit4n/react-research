@@ -22,7 +22,7 @@ import Chip from '@material-ui/core/Chip';
 import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
 
-const styles = {
+const styles = theme => ({
   card: {
     maxWidth: '80%',
   },
@@ -56,8 +56,7 @@ const styles = {
   chip: {
     margin: 10,
   }
-  
-};
+});
 
 
 function Transition(props) {
@@ -79,6 +78,7 @@ class GoalsList extends React.Component {
       goalList: [],
       newDescription: "",
       newName: "",
+      newImageUrl: "",
       research: ""
     };
     this.loadResearchList();
@@ -114,6 +114,10 @@ class GoalsList extends React.Component {
     this.setState({ newName: event.target.value });
   }
 
+  handleChangeImageUrl = (event) => {
+    this.setState({ newImageUrl: event.target.value });
+  }
+
   handleSelectChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
@@ -136,10 +140,11 @@ class GoalsList extends React.Component {
     let data = {
       "researchProcessId": this.state.research,
       "name": this.state.newName,
+      "imageUrl": this.state.newImageUrl,
       "description": this.state.newDescription
     }
 
-    this.setState({ newName: "", newDescription: "" });
+    this.setState({ newName: "", newDescription: "", newImageUrl: "" });
 
     let fetchData = {
       method: 'POST',
@@ -197,22 +202,23 @@ class GoalsList extends React.Component {
             </Select>
           </FormControl>
           <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" onChange={this.handleChangeName} />
+          <TextField required id="required" label="Image Url" className={classes.textField} margin="normal" onChange={this.handleChangeImageUrl} />
           <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
         </Dialog>
 
         {this.state.goalList.map(data => (<Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image="/static/images/goal1.jpeg"
+            image={data.imageUrl}
             title="Contemplative Reptile"
           />
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
-              {data.name}
+              {data.name} <Chip label={data.researchProcess.name} className={classes.chip} />
             </Typography>
             <Typography component="p">
               {data.description}
-              <Chip label={data.researchProcess.name} className={classes.chip} />
+              
             </Typography>
           </CardContent>
           <CardActions>
