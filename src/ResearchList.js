@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+import { DataService } from './services/Api'
 
 const styles = theme => ({
   card: {
@@ -60,6 +61,7 @@ class ResearchList extends React.Component {
 
   constructor(props) {
     super(props);
+    //console.log(data1);
     this.state = {
       open: false,
       items: [],
@@ -68,7 +70,12 @@ class ResearchList extends React.Component {
       newImageUrl: "",
       openSnack: true
     };
-    this.loadItems();
+    DataService.getData.then(data => {
+      DataService.getData.then(data => {
+        this.setState({ items: data });
+      });
+    });
+    //this.loadItems();
   }
 
   handleChangeDescription = (event) => {
@@ -88,11 +95,8 @@ class ResearchList extends React.Component {
   };
 
   loadItems = () => {
-    fetch(this.url)
-    .then(function (response) {
-      return response.json();
-    }).then( (data) => {
-      this.setState({items: data});
+    DataService.reloadData.then(data => {
+      this.setState({ items: data });
     });
   }
 
