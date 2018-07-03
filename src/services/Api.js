@@ -1,7 +1,7 @@
 var DataService = (function(){
   var _data = [];
   var isLoad = false;
-  var researchProcessApi = 'http://localhost:3000/api/Research';
+  var researchApi = 'http://localhost:3000/api/Research';
   var researchGoalApi = 'http://localhost:3000/api/ResearchGoals';
 
   function add(item) {
@@ -13,12 +13,12 @@ var DataService = (function(){
       if (isLoad) {
         resolve(_data);
       } else {
-        fetch(researchProcessApi)
+        fetch(researchApi)
         .then(function (response) {
           return response.json();
         }).then((data) => {
           _data = data;
-          resolve(_data);
+          resolve(data);
         });
       }
     }
@@ -26,12 +26,12 @@ var DataService = (function(){
 
   var reloadData = new Promise(
     function (resolve, reject) {
-      fetch(researchProcessApi)
+      fetch(researchApi)
       .then(function (response) {
         return response.json();
       }).then((data) => {
         _data = data;
-        resolve(_data);
+        resolve(data);
       });
     }
   );
@@ -39,7 +39,8 @@ var DataService = (function(){
   return {
     add: add,
     getData: getData,
-    reloadData: reloadData
+    reloadData: reloadData,
+    researchApi: researchApi
   };
 }());
 

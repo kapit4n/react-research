@@ -68,7 +68,7 @@ class GoalsList extends React.Component {
 
   researchProcessApi = 'http://localhost:3000/api/Research';
   researchGoalApi = 'http://localhost:3000/api/ResearchGoals';
-  filterIncludeResearch = "filter[include]=researchProcess";
+  filterIncludeResearch = "filter[include]=research";
 
   constructor(props) {
     super(props);
@@ -222,7 +222,7 @@ class GoalsList extends React.Component {
           />
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
-              {data.name} <Chip label={data.researchProcess.name} className={classes.chip} />
+              {data.name} <Chip label={data.research.name} className={classes.chip} />
             </Typography>
             <Typography component="p">
               {data.description}              

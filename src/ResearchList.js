@@ -57,11 +57,8 @@ function Transition(props) {
 
 class ResearchList extends React.Component {
 
-  url = 'http://localhost:3000/api/Research';
-
   constructor(props) {
     super(props);
-    //console.log(data1);
     this.state = {
       open: false,
       items: [],
@@ -70,12 +67,8 @@ class ResearchList extends React.Component {
       newImageUrl: "",
       openSnack: true
     };
-    DataService.getData.then(data => {
-      DataService.getData.then(data => {
-        this.setState({ items: data });
-      });
-    });
-    //this.loadItems();
+
+    this.loadItems();
   }
 
   handleChangeDescription = (event) => {
@@ -95,9 +88,12 @@ class ResearchList extends React.Component {
   };
 
   loadItems = () => {
-    DataService.reloadData.then(data => {
-      this.setState({ items: data });
-    });
+    fetch(`${DataService.researchApi}`)
+      .then(function (response) {
+        return response.json();
+      }).then((data) => {
+        this.setState({ items: data });
+      });
   }
 
   handleClose = () => {
@@ -129,21 +125,18 @@ class ResearchList extends React.Component {
       }
     }
 
-    fetch(this.url, fetchData)
+    fetch(DataService.researchApi, fetchData)
       .then(function (response) {
         return response.json();
       }).then((data) => {
-        console.log(data);
         this.loadItems();
       });
   };
 
   removeItem = (itemId) => {
-    console.log(itemId);
-    fetch(this.url + "/" + itemId, { method: 'DELETE'}).then(function (response) {
+    fetch(DataService.researchApi + "/" + itemId, { method: 'DELETE'}).then(function (response) {
       return response.json();
     }).then((data) => {
-      console.log(data);
       this.loadItems();
     });
   }
