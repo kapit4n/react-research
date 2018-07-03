@@ -21,6 +21,7 @@ import Chip from '@material-ui/core/Chip';
 
 import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
+import { DataService } from './services/Api'
 
 const styles = theme => ({
   card: {
@@ -66,10 +67,6 @@ function Transition(props) {
 
 class GoalsList extends React.Component {
 
-  researchProcessApi = 'http://localhost:3000/api/Research';
-  researchGoalApi = 'http://localhost:3000/api/ResearchGoals';
-  filterIncludeResearch = "filter[include]=research";
-
   constructor(props) {
     super(props);
     this.state = {
@@ -88,7 +85,7 @@ class GoalsList extends React.Component {
   // load all values
   loadResearchList = () => {
     // load research list
-    fetch(this.researchProcessApi)
+    fetch(DataService.researchApi)
       .then(function (response) {
         return response.json();
       }).then((data) => {
@@ -98,7 +95,7 @@ class GoalsList extends React.Component {
 
   // load all values
   loadGoalList = () => {
-    fetch(`${this.researchGoalApi}/?${this.filterIncludeResearch}`)
+    fetch(`${DataService.researchGoalApi}/?${DataService.filterInResearch}`)
       .then(function (response) {
         return response.json();
       }).then((data) => {
@@ -154,7 +151,7 @@ class GoalsList extends React.Component {
       }
     }
 
-    fetch(this.researchGoalApi, fetchData)
+    fetch(DataService.researchGoalApi, fetchData)
       .then(function (response) {
         return response.json();
       }).then((data) => {
@@ -163,7 +160,7 @@ class GoalsList extends React.Component {
   };
 
   removeItem = (itemId) => {
-    fetch(this.researchGoalApi + "/" + itemId, { method: 'DELETE'}).then(function (response) {
+    fetch(DataService.researchGoalApi + "/" + itemId, { method: 'DELETE'}).then(function (response) {
       return response.json();
     }).then((data) => {
       this.loadGoalList();

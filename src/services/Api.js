@@ -3,7 +3,7 @@ var DataService = (function(){
   var isLoad = false;
   var researchApi = 'http://localhost:3000/api/Research';
   var researchGoalApi = 'http://localhost:3000/api/ResearchGoals';
-
+  var filterInResearch = "filter[include]=research";
   function add(item) {
     _data.push(item);
   }
@@ -40,7 +40,9 @@ var DataService = (function(){
     add: add,
     getData: getData,
     reloadData: reloadData,
-    researchApi: researchApi
+    researchApi: researchApi,
+    researchGoalApi: researchGoalApi,
+    filterInResearch: filterInResearch
   };
 }());
 
