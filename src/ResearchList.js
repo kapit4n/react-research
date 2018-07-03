@@ -57,7 +57,7 @@ function Transition(props) {
 
 class ResearchList extends React.Component {
 
-  url = 'http://localhost:3000/api/ResearchProcesses';
+  url = 'http://localhost:3000/api/Research';
 
   constructor(props) {
     super(props);

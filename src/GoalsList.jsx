@@ -66,7 +66,7 @@ function Transition(props) {
 
 class GoalsList extends React.Component {
 
-  researchProcessApi = 'http://localhost:3000/api/ResearchProcesses';
+  researchProcessApi = 'http://localhost:3000/api/Research';
   researchGoalApi = 'http://localhost:3000/api/ResearchGoals';
   filterIncludeResearch = "filter[include]=researchProcess";
 
@@ -138,7 +138,7 @@ class GoalsList extends React.Component {
     this.setState({ open: false });
     // get the new item value
     let data = {
-      "researchProcessId": this.state.research,
+      "researchId": this.state.research,
       "name": this.state.newName,
       "imageUrl": this.state.newImageUrl,
       "description": this.state.newDescription
