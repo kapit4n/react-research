@@ -145,7 +145,7 @@ class ResearchList extends React.Component {
   render() {
     const { classes } = this.props;
     
-    const researchListCards = this.state.items.map(item => <CardCustom item={item} classes={classes} removeItem={this.removeItem}></CardCustom>);
+    const researchListCards = this.state.items.map(item => <CardCustom item={item} classes={classes} removeItem={this.removeItem} chips={[]}></CardCustom>);
 
     return (
       <div>

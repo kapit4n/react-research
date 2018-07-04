@@ -22,6 +22,7 @@ import Chip from '@material-ui/core/Chip';
 import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
 import { DataService } from './services/Api'
+import CardCustom from './CardCustom'
 
 const styles = theme => ({
   card: {
@@ -66,7 +67,6 @@ const styles = theme => ({
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 } 
-
 
 class GoalsList extends React.Component {
 
@@ -174,30 +174,7 @@ class GoalsList extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const goalListCards = this.state.goalList.map(data => (<Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image={data.imageUrl}
-        title="Contemplative Reptile"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="headline" component="h2">
-          {data.name} <Chip label={data.research.name} className={classes.chip} />
-        </Typography>
-        <Typography component="p">
-          {data.description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => this.removeItem(data.id)}>
-          remove
-            </Button>
-        <Button size="small" color="primary">
-          Like
-            </Button>
-      </CardActions>
-    </Card>)
-    );
+    const goalListCards = this.state.goalList.map(item => <CardCustom item={item} classes={classes} removeItem={this.removeItem} chips={[item.research.name]}></CardCustom>);
 
     return (
       <div>

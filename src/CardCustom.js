@@ -16,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
-
+import Chip from '@material-ui/core/Chip';
 
 function CardCustom(props) {
     return (
@@ -28,7 +28,7 @@ function CardCustom(props) {
         />
         <CardContent>
           <Typography gutterBottom variant="headline" component="h3">
-            {props.item.id} : {props.item.name}
+            {props.item.name} {props.chips.map(chipItem => <Chip label={chipItem} className={props.classes.chip} />)}
           </Typography>
           <Typography component="p">
             {props.item.description}
