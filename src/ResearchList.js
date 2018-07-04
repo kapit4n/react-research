@@ -17,6 +17,7 @@ import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import { DataService } from './services/Api'
+import CardCustom from './CardCustom'
 
 const styles = theme => ({
   card: {
@@ -143,34 +144,6 @@ class ResearchList extends React.Component {
 
   render() {
     const { classes } = this.props;
-
-    const researchListCarts = this.state.items.map((item) => {
-      return (
-        <Card className={classes.card} key={item.id}>
-          <CardMedia
-            className={classes.media}
-            image={item.imageUrl}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="headline" component="h3">
-              {item.id} : {item.name}
-            </Typography>
-            <Typography component="p">
-              {item.description}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" color="primary" onClick={() => this.removeItem(item.id)}>
-              remove
-            </Button>
-            <Button size="small" color="primary">
-              Open
-            </Button>
-          </CardActions>
-        </Card>
-      )
-    });
     
     return (
       <div>
@@ -197,8 +170,8 @@ class ResearchList extends React.Component {
           <TextField required id="required" label="Image Url" className={classes.textField} margin="normal" onChange={this.handleChangeImageUrl} />
           <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
         </Dialog>
-
-        {researchListCarts}
+        <CardCustom items={this.state.items} classes={classes} removeItem={this.removeItem}></CardCustom>
+        
         <Snackbar
           open={this.state.openSnack}
           autoHideDuration={4000}
