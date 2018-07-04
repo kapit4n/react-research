@@ -4,6 +4,7 @@ var DataService = (function(){
   var researchApi = 'http://localhost:3000/api/Research';
   var researchGoalApi = 'http://localhost:3000/api/ResearchGoals';
   var filterInResearch = "filter[include]=research";
+
   function add(item) {
     _data.push(item);
   }

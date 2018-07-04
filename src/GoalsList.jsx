@@ -170,6 +170,32 @@ class GoalsList extends React.Component {
 
   render() {
     const { classes } = this.props;
+
+    const goalListCards = this.state.goalList.map(data => (<Card className={classes.card}>
+      <CardMedia
+        className={classes.media}
+        image={data.imageUrl}
+        title="Contemplative Reptile"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="headline" component="h2">
+          {data.name} <Chip label={data.research.name} className={classes.chip} />
+        </Typography>
+        <Typography component="p">
+          {data.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary" onClick={() => this.removeItem(data.id)}>
+          remove
+            </Button>
+        <Button size="small" color="primary">
+          Like
+            </Button>
+      </CardActions>
+    </Card>)
+    );
+
     return (
       <div>
         <Button variant="fab" className={classes.fab} color='primary' onClick={this.handleClickOpen}>
@@ -211,30 +237,9 @@ class GoalsList extends React.Component {
           <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
         </Dialog>
 
-        {this.state.goalList.map(data => (<Card className={classes.card}>
-          <CardMedia
-            className={classes.media}
-            image={data.imageUrl}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="headline" component="h2">
-              {data.name} <Chip label={data.research.name} className={classes.chip} />
-            </Typography>
-            <Typography component="p">
-              {data.description}              
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" color="primary" onClick={() => this.removeItem(data.id)}>
-              remove
-            </Button>
-            <Button size="small" color="primary">
-              Like
-            </Button>
-          </CardActions>
-        </Card>)
-      )}
+        {
+          goalListCards
+        }
       </div>
     );    
   }

@@ -65,7 +65,7 @@ class ResearchList extends React.Component {
       newDescription: "",
       newName: "",
       newImageUrl: "",
-      openSnack: true
+      openSnack: false
     };
 
     this.loadItems();
@@ -144,7 +144,7 @@ class ResearchList extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const itemsMap = this.state.items.map((item) => {
+    const researchListCarts = this.state.items.map((item) => {
       return (
         <Card className={classes.card} key={item.id}>
           <CardMedia
@@ -198,7 +198,7 @@ class ResearchList extends React.Component {
           <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
         </Dialog>
 
-        {itemsMap}
+        {researchListCarts}
         <Snackbar
           open={this.state.openSnack}
           autoHideDuration={4000}
