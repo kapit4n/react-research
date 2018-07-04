@@ -25,11 +25,14 @@ import { DataService } from './services/Api'
 
 const styles = theme => ({
   card: {
-    maxWidth: '80%',
+    width: 400,
+    display: "inline-block",
+    margin: 10
   },
   media: {
-    height: 100,
-    paddingTop: 0, // 16:9
+    height: 215,
+    paddingTop: 16, // 16:9
+    margin: 10
   },
   fab: {
     position: 'absolute',
