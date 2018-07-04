@@ -19,24 +19,23 @@ import AddIcon from '@material-ui/icons/Add';
 
 
 function CardCustom(props) {
-  return props.items.map((item) => {
     return (
-      <Card className={props.classes.card} key={item.id}>
+      <Card className={props.classes.card} key={props.item.id}>
         <CardMedia
           className={props.classes.media}
-          image={item.imageUrl}
+          image={props.item.imageUrl}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="headline" component="h3">
-            {item.id} : {item.name}
+            {props.item.id} : {props.item.name}
           </Typography>
           <Typography component="p">
-            {item.description}
+            {props.item.description}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={() => props.removeItem(item.id)}>
+          <Button size="small" color="primary" onClick={() => props.removeItem(props.item.id)}>
             remove
             </Button>
           <Button size="small" color="primary">
@@ -44,8 +43,7 @@ function CardCustom(props) {
             </Button>
         </CardActions>
       </Card>
-    )
-  });
+    );
 }
 
 export default CardCustom;

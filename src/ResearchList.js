@@ -145,6 +145,8 @@ class ResearchList extends React.Component {
   render() {
     const { classes } = this.props;
     
+    const researchListCards = this.state.items.map(item => <CardCustom item={item} classes={classes} removeItem={this.removeItem}></CardCustom>);
+
     return (
       <div>
         <Button variant="fab" className={classes.fab} color='primary' onClick={this.handleClickOpen}>
@@ -170,8 +172,7 @@ class ResearchList extends React.Component {
           <TextField required id="required" label="Image Url" className={classes.textField} margin="normal" onChange={this.handleChangeImageUrl} />
           <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
         </Dialog>
-        <CardCustom items={this.state.items} classes={classes} removeItem={this.removeItem}></CardCustom>
-        
+        {researchListCards}
         <Snackbar
           open={this.state.openSnack}
           autoHideDuration={4000}
