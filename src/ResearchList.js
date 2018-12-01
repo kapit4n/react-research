@@ -59,10 +59,8 @@ class ResearchList extends React.Component {
       open: false,
       openEdit: false,
       items: [],
-      newDescription: "",
-      newName: "",
-      newImageUrl: "",
       editItem: {},
+      newItem: {},
       openSnack: false
     };
 
@@ -77,7 +75,11 @@ class ResearchList extends React.Component {
         })
       });
     } else {
-      this.setState({ newDescription: event.target.value });
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          description: event.target.value
+        })
+      });
     }
   };
 
@@ -89,7 +91,11 @@ class ResearchList extends React.Component {
         })
       });
     } else {
-      this.setState({ newName: event.target.value });
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          name: event.target.value
+        })
+      });
     }
   };
 
@@ -101,7 +107,11 @@ class ResearchList extends React.Component {
         })
       });
     } else {
-      this.setState({ newImageUrl: event.target.value });
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          imageUrl: event.target.value
+        })
+      });
     }
   };
 
@@ -139,14 +149,14 @@ class ResearchList extends React.Component {
     this.setState({ open: false, openSnack: true });
     // get the new item value
     let data = {
-      name: this.state.newName,
-      imageUrl: this.state.newImageUrl,
+      name: this.state.newItem.name,
+      imageUrl: this.state.newItem.imageUrl,
       startDate: "2018-06-25T16:22:57.779Z",
       endDate: "2018-09-25T16:22:57.779Z",
-      description: this.state.newDescription
+      description: this.state.newItem.description
     };
 
-    this.setState({ newName: "", newDescription: "", newImageUrl: "" });
+    this.setState({ newItem: {} });
 
     let fetchData = {
       method: "POST",
@@ -176,7 +186,7 @@ class ResearchList extends React.Component {
       description: this.state.editItem.description
     };
 
-    this.setState({ newName: "", newDescription: "", newImageUrl: "" });
+    this.setState({ editItem: {} });
 
     let fetchData = {
       method: "PUT",
@@ -210,6 +220,7 @@ class ResearchList extends React.Component {
 
     const researchListCards = this.state.items.map(item => (
       <CardCustom
+        key={item.id}
         item={item}
         classes={classes}
         removeItem={this.removeItem}
