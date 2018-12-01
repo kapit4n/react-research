@@ -74,10 +74,8 @@ class GoalsList extends React.Component {
       open: false,
       researchList: [],
       goalList: [],
-      newDescription: "",
-      newName: "",
-      newImageUrl: "",
-      research: ""
+      newItem: {},
+      researchId: ""
     };
     this.loadResearchList();
     this.loadGoalList();
@@ -107,15 +105,33 @@ class GoalsList extends React.Component {
   };
 
   handleChangeDescription = event => {
-    this.setState({ newDescription: event.target.value });
+    if (this.open) {
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          description: event.target.value
+        })
+      });
+    }
   };
 
   handleChangeName = event => {
-    this.setState({ newName: event.target.value });
+    if (this.open) {
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          name: event.target.value
+        })
+      });
+    }
   };
 
   handleChangeImageUrl = event => {
-    this.setState({ newImageUrl: event.target.value });
+    if (this.open) {
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          imageUrl: event.target.value
+        })
+      });
+    }
   };
 
   handleSelectChange = name => event => {
@@ -138,13 +154,13 @@ class GoalsList extends React.Component {
     this.setState({ open: false });
     // get the new item value
     let data = {
-      researchId: this.state.research,
-      name: this.state.newName,
-      imageUrl: this.state.newImageUrl,
-      description: this.state.newDescription
+      researchId: this.state.researchId,
+      name: this.state.newItem.name,
+      imageUrl: this.state.newItem.imageUrl,
+      description: this.state.newItem.description
     };
 
-    this.setState({ newName: "", newDescription: "", newImageUrl: "" });
+    this.setState({ newItem: {} });
 
     let fetchData = {
       method: "POST",
@@ -231,11 +247,8 @@ class GoalsList extends React.Component {
             <Select
               native
               value={this.state.reseachId}
-              onChange={this.handleSelectChange("research")}
-              inputProps={{
-                name: "research",
-                id: "research-native-simple"
-              }}
+              onChange={this.handleSelectChange("researchId")}
+              inputProps={{ name: "researchId", id: "research-native-simple" }}
             >
               <option value="" />
               {this.state.researchList.map(data => (
