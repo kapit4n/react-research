@@ -2,19 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import { DataService } from "./services/Api";
 import CardCustom from "./CardCustom";
 import NewResearchItem from "./NewResearchItem";
 import EditResearchItem from "./EditResearchItem";
+import DisplayResearchItem from "./DisplayResearchItem";
 
 const styles = theme => ({
   card: {
@@ -59,8 +54,10 @@ class ResearchList extends React.Component {
     this.state = {
       open: false,
       openEdit: false,
+      openDisplay: false,
       items: [],
       editItem: {},
+      displayItem: {},
       newItem: {},
       openSnack: false
     };
@@ -124,6 +121,10 @@ class ResearchList extends React.Component {
     this.setState({ openEdit: true, editItem: product });
   };
 
+  handleClickOpenDisplay = product => {
+    this.setState({ openDisplay: true, displayItem: product });
+  };
+
   loadItems = () => {
     fetch(`${DataService.researchApi}`)
       .then(function(response) {
@@ -140,6 +141,10 @@ class ResearchList extends React.Component {
 
   handleCloseEdit = () => {
     this.setState({ openEdit: false });
+  };
+
+  handleCloseDisplay = () => {
+    this.setState({ openDisplay: false });
   };
 
   handleCloseSnack = () => {
@@ -224,6 +229,7 @@ class ResearchList extends React.Component {
         classes={classes}
         removeItem={this.removeItem}
         handleClickOpenEdit={this.handleClickOpenEdit}
+        handleClickOpenDisplay={this.handleClickOpenDisplay}
         chips={[]}
       />
     ));
@@ -258,6 +264,15 @@ class ResearchList extends React.Component {
           handleUpdate={this.handleUpdate}
           openEdit={this.state.openEdit}
           Transition={Transition}
+        />
+
+        <DisplayResearchItem
+          displayItem={this.state.displayItem}
+          handleCloseDisplay={this.handleCloseDisplay}
+          openDisplay={this.state.openDisplay}
+          Transition={Transition}
+          removeItem={this.removeItem}
+          handleClickOpenEdit={this.handleClickOpenEdit}
         />
 
         {researchListCards}

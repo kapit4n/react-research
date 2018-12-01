@@ -45,7 +45,11 @@ function CardCustom(props) {
           Edit
         </Button>
 
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => props.handleClickOpenDisplay(props.item)}
+        >
           Open
         </Button>
       </CardActions>
