@@ -19,7 +19,11 @@ function CardCustom(props) {
         <Typography gutterBottom variant="headline" component="h3">
           {props.item.name}{" "}
           {props.chips.map(chipItem => (
-            <Chip label={chipItem} className={props.classes.chip} />
+            <Chip
+              key={chipItem}
+              label={chipItem}
+              className={props.classes.chip}
+            />
           ))}
         </Typography>
         <Typography component="p">{props.item.description}</Typography>
@@ -41,7 +45,11 @@ function CardCustom(props) {
           Edit
         </Button>
 
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => props.handleClickOpenDisplay(props.item)}
+        >
           Open
         </Button>
       </CardActions>

@@ -2,18 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import TextField from "@material-ui/core/TextField";
-import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import { DataService } from "./services/Api";
 import CardCustom from "./CardCustom";
+import NewResearchItem from "./NewResearchItem";
+import EditResearchItem from "./EditResearchItem";
+import DisplayResearchItem from "./DisplayResearchItem";
 
 const styles = theme => ({
   card: {
@@ -58,11 +54,11 @@ class ResearchList extends React.Component {
     this.state = {
       open: false,
       openEdit: false,
+      openDisplay: false,
       items: [],
-      newDescription: "",
-      newName: "",
-      newImageUrl: "",
       editItem: {},
+      displayItem: {},
+      newItem: {},
       openSnack: false
     };
 
@@ -77,7 +73,11 @@ class ResearchList extends React.Component {
         })
       });
     } else {
-      this.setState({ newDescription: event.target.value });
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          description: event.target.value
+        })
+      });
     }
   };
 
@@ -89,7 +89,11 @@ class ResearchList extends React.Component {
         })
       });
     } else {
-      this.setState({ newName: event.target.value });
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          name: event.target.value
+        })
+      });
     }
   };
 
@@ -101,7 +105,11 @@ class ResearchList extends React.Component {
         })
       });
     } else {
-      this.setState({ newImageUrl: event.target.value });
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          imageUrl: event.target.value
+        })
+      });
     }
   };
 
@@ -111,6 +119,10 @@ class ResearchList extends React.Component {
 
   handleClickOpenEdit = product => {
     this.setState({ openEdit: true, editItem: product });
+  };
+
+  handleClickOpenDisplay = product => {
+    this.setState({ openDisplay: true, displayItem: product });
   };
 
   loadItems = () => {
@@ -124,11 +136,15 @@ class ResearchList extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, openSnack: true });
   };
 
   handleCloseEdit = () => {
     this.setState({ openEdit: false });
+  };
+
+  handleCloseDisplay = () => {
+    this.setState({ openDisplay: false });
   };
 
   handleCloseSnack = () => {
@@ -137,16 +153,15 @@ class ResearchList extends React.Component {
 
   handleSave = () => {
     this.setState({ open: false, openSnack: true });
-    // get the new item value
     let data = {
-      name: this.state.newName,
-      imageUrl: this.state.newImageUrl,
+      name: this.state.newItem.name,
+      imageUrl: this.state.newItem.imageUrl,
       startDate: "2018-06-25T16:22:57.779Z",
       endDate: "2018-09-25T16:22:57.779Z",
-      description: this.state.newDescription
+      description: this.state.newItem.description
     };
 
-    this.setState({ newName: "", newDescription: "", newImageUrl: "" });
+    this.setState({ newItem: {} });
 
     let fetchData = {
       method: "POST",
@@ -167,7 +182,6 @@ class ResearchList extends React.Component {
 
   handleUpdate = () => {
     this.setState({ openEdit: false, openSnackEdit: true });
-    // get the new item value
     let data = {
       name: this.state.editItem.name,
       imageUrl: this.state.editItem.imageUrl,
@@ -176,7 +190,7 @@ class ResearchList extends React.Component {
       description: this.state.editItem.description
     };
 
-    this.setState({ newName: "", newDescription: "", newImageUrl: "" });
+    this.setState({ editItem: {} });
 
     let fetchData = {
       method: "PUT",
@@ -210,10 +224,12 @@ class ResearchList extends React.Component {
 
     const researchListCards = this.state.items.map(item => (
       <CardCustom
+        key={item.id}
         item={item}
         classes={classes}
         removeItem={this.removeItem}
         handleClickOpenEdit={this.handleClickOpenEdit}
+        handleClickOpenDisplay={this.handleClickOpenDisplay}
         chips={[]}
       />
     ));
@@ -229,118 +245,35 @@ class ResearchList extends React.Component {
           <AddIcon />
         </Button>
 
-        <Dialog
-          fullScreen
+        <NewResearchItem
+          handleChangeDescription={this.handleChangeDescription}
+          handleChangeImageUrl={this.handleChangeImageUrl}
+          handleChangeName={this.handleChangeName}
+          handleClose={this.handleClose}
+          handleSave={this.handleSave}
           open={this.state.open}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleClose}
-                aria-label="Close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
-              >
-                {" "}
-                Create new research process{" "}
-              </Typography>
-              <Button color="inherit" onClick={this.handleSave}>
-                {" "}
-                save{" "}
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <TextField
-            required
-            id="required"
-            label="Research Name"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeName}
-          />
-          <TextField
-            required
-            id="required"
-            label="Image Url"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeImageUrl}
-          />
-          <TextField
-            required
-            id="required"
-            label="Research Description"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeDescription}
-          />
-        </Dialog>
+          Transition={Transition}
+        />
 
-        <Dialog
-          fullScreen
-          open={this.state.openEdit}
-          onClose={this.handleCloseEdit}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleCloseEdit}
-                aria-label="Close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
-              >
-                {" "}
-                Edit research process{" "}
-              </Typography>
-              <Button color="inherit" onClick={this.handleUpdate}>
-                {" "}
-                Save{" "}
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <TextField
-            required
-            id="required"
-            label="Research Name"
-            className={classes.textField}
-            margin="normal"
-            value={this.state.editItem.name}
-            onChange={this.handleChangeName}
-          />
-          <TextField
-            required
-            id="required"
-            label="Image Url"
-            className={classes.textField}
-            value={this.state.editItem.imageUrl}
-            margin="normal"
-            onChange={this.handleChangeImageUrl}
-          />
-          <TextField
-            required
-            id="required"
-            label="Research Description"
-            className={classes.textField}
-            value={this.state.editItem.description}
-            margin="normal"
-            onChange={this.handleChangeDescription}
-          />
-        </Dialog>
+        <EditResearchItem
+          handleChangeDescription={this.handleChangeDescription}
+          handleChangeImageUrl={this.handleChangeImageUrl}
+          handleChangeName={this.handleChangeName}
+          editItem={this.state.editItem}
+          handleCloseEdit={this.handleCloseEdit}
+          handleUpdate={this.handleUpdate}
+          openEdit={this.state.openEdit}
+          Transition={Transition}
+        />
+
+        <DisplayResearchItem
+          displayItem={this.state.displayItem}
+          handleCloseDisplay={this.handleCloseDisplay}
+          openDisplay={this.state.openDisplay}
+          Transition={Transition}
+          removeItem={this.removeItem}
+          handleClickOpenEdit={this.handleClickOpenEdit}
+        />
 
         {researchListCards}
         <Snackbar

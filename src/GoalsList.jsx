@@ -1,28 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Slide from '@material-ui/core/Slide';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Chip from '@material-ui/core/Chip';
+import { withStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Slide from "@material-ui/core/Slide";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
-import AddIcon from '@material-ui/icons/Add'
-import CloseIcon from '@material-ui/icons/Close'
-import { DataService } from './services/Api'
-import CardCustom from './CardCustom'
+import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
+import { DataService } from "./services/Api";
+import CardCustom from "./CardCustom";
 
 const styles = theme => ({
   card: {
@@ -36,50 +31,46 @@ const styles = theme => ({
     margin: 10
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     top: 65,
-    left: 245,
+    left: 245
   },
   appBar: {
-    position: 'relative',
+    position: "relative"
   },
   flex: {
-    flex: 1,
+    flex: 1
   },
   textField: {
     marginLeft: 10,
     marginRight: 10,
-    width: '80%',
+    width: "80%"
   },
   formControl: {
     margin: 10,
-    minWidth: 120,
+    minWidth: 120
   },
   selectEmpty: {
-    marginTop: 10,
+    marginTop: 10
   },
   chip: {
-    margin: 10,
+    margin: 10
   }
 });
 
-
 function Transition(props) {
   return <Slide direction="up" {...props} />;
-} 
+}
 
 class GoalsList extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       open: false,
       researchList: [],
       goalList: [],
-      newDescription: "",
-      newName: "",
-      newImageUrl: "",
-      research: ""
+      newItem: {},
+      researchId: ""
     };
     this.loadResearchList();
     this.loadGoalList();
@@ -89,39 +80,59 @@ class GoalsList extends React.Component {
   loadResearchList = () => {
     // load research list
     fetch(DataService.researchApi)
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
-      }).then((data) => {
+      })
+      .then(data => {
         this.setState({ researchList: data });
       });
-  }
+  };
 
   // load all values
   loadGoalList = () => {
     fetch(`${DataService.researchGoalApi}/?${DataService.filterInResearch}`)
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
-      }).then((data) => {
+      })
+      .then(data => {
         this.setState({ goalList: data });
       });
-  }
+  };
 
-  handleChangeDescription = (event) => {
-    this.setState({ newDescription: event.target.value });
-  }
+  handleChangeDescription = event => {
+    if (this.open) {
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          description: event.target.value
+        })
+      });
+    }
+  };
 
-  handleChangeName = (event) => {
-    this.setState({ newName: event.target.value });
-  }
+  handleChangeName = event => {
+    if (this.open) {
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          name: event.target.value
+        })
+      });
+    }
+  };
 
-  handleChangeImageUrl = (event) => {
-    this.setState({ newImageUrl: event.target.value });
-  }
+  handleChangeImageUrl = event => {
+    if (this.open) {
+      this.setState({
+        newItem: Object.assign({}, this.state.newItem, {
+          imageUrl: event.target.value
+        })
+      });
+    }
+  };
 
   handleSelectChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
-  
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -138,47 +149,62 @@ class GoalsList extends React.Component {
     this.setState({ open: false });
     // get the new item value
     let data = {
-      "researchId": this.state.research,
-      "name": this.state.newName,
-      "imageUrl": this.state.newImageUrl,
-      "description": this.state.newDescription
-    }
+      researchId: this.state.researchId,
+      name: this.state.newItem.name,
+      imageUrl: this.state.newItem.imageUrl,
+      description: this.state.newItem.description
+    };
 
-    this.setState({ newName: "", newDescription: "", newImageUrl: "" });
+    this.setState({ newItem: {} });
 
     let fetchData = {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json"
       }
-    }
+    };
 
     fetch(DataService.researchGoalApi, fetchData)
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
-      }).then((data) => {
+      })
+      .then(data => {
         this.loadGoalList();
       });
   };
 
-  removeItem = (itemId) => {
-    fetch(DataService.researchGoalApi + "/" + itemId, { method: 'DELETE'}).then(function (response) {
-      return response.json();
-    }).then((data) => {
-      this.loadGoalList();
-    });
-  }
-
+  removeItem = itemId => {
+    fetch(DataService.researchGoalApi + "/" + itemId, { method: "DELETE" })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(data => {
+        this.loadGoalList();
+      });
+  };
 
   render() {
     const { classes } = this.props;
 
-    const goalListCards = this.state.goalList.map(item => <CardCustom item={item} classes={classes} removeItem={this.removeItem} chips={[item.research.name]}></CardCustom>);
+    const goalListCards = this.state.goalList.map(item => (
+      <CardCustom
+        key={item.id}
+        item={item}
+        classes={classes}
+        removeItem={this.removeItem}
+        chips={[item.research.name]}
+      />
+    ));
 
     return (
       <div>
-        <Button variant="fab" className={classes.fab} color='primary' onClick={this.handleClickOpen}>
+        <Button
+          variant="fab"
+          className={classes.fab}
+          color="primary"
+          onClick={this.handleClickOpen}
+        >
           <AddIcon />
         </Button>
 
@@ -190,11 +216,25 @@ class GoalsList extends React.Component {
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+              <IconButton
+                color="inherit"
+                onClick={this.handleClose}
+                aria-label="Close"
+              >
                 <CloseIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" className={classes.flex}> Create new Goal </Typography>
-              <Button color="inherit" onClick={this.handleSave}> save </Button>
+              <Typography
+                variant="title"
+                color="inherit"
+                className={classes.flex}
+              >
+                {" "}
+                Create new Goal{" "}
+              </Typography>
+              <Button color="inherit" onClick={this.handleSave}>
+                {" "}
+                save{" "}
+              </Button>
             </Toolbar>
           </AppBar>
           <FormControl className={classes.formControl}>
@@ -202,31 +242,51 @@ class GoalsList extends React.Component {
             <Select
               native
               value={this.state.reseachId}
-              onChange={this.handleSelectChange('research')}
-              inputProps={{
-                name: 'research',
-                id: 'research-native-simple',
-              }}
+              onChange={this.handleSelectChange("researchId")}
+              inputProps={{ name: "researchId", id: "research-native-simple" }}
             >
               <option value="" />
-              {this.state.researchList.map(data => <option value={data.id}>{data.name}</option>)}
+              {this.state.researchList.map(data => (
+                <option key={data.id} value={data.id}>
+                  {data.name}
+                </option>
+              ))}
             </Select>
           </FormControl>
-          <TextField required id="required" label="Research Name" className={classes.textField} margin="normal" onChange={this.handleChangeName} />
-          <TextField required id="required" label="Image Url" className={classes.textField} margin="normal" onChange={this.handleChangeImageUrl} />
-          <TextField required id="required" label="Research Description" className={classes.textField} margin="normal" onChange={this.handleChangeDescription} />
+          <TextField
+            required
+            id="required"
+            label="Research Name"
+            className={classes.textField}
+            margin="normal"
+            onChange={this.handleChangeName}
+          />
+          <TextField
+            required
+            id="required"
+            label="Image Url"
+            className={classes.textField}
+            margin="normal"
+            onChange={this.handleChangeImageUrl}
+          />
+          <TextField
+            required
+            id="required"
+            label="Research Description"
+            className={classes.textField}
+            margin="normal"
+            onChange={this.handleChangeDescription}
+          />
         </Dialog>
 
-        {
-          goalListCards
-        }
+        {goalListCards}
       </div>
-    );    
+    );
   }
 }
 
 GoalsList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(GoalsList);
