@@ -9,11 +9,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
-import TextField from "@material-ui/core/TextField";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import { DataService } from "./services/Api";
 import CardCustom from "./CardCustom";
+import NewResearchItem from "./NewResearchItem";
+import EditResearchItem from "./EditResearchItem";
 
 const styles = theme => ({
   card: {
@@ -134,7 +135,7 @@ class ResearchList extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, openSnack: true });
   };
 
   handleCloseEdit = () => {
@@ -147,7 +148,6 @@ class ResearchList extends React.Component {
 
   handleSave = () => {
     this.setState({ open: false, openSnack: true });
-    // get the new item value
     let data = {
       name: this.state.newItem.name,
       imageUrl: this.state.newItem.imageUrl,
@@ -177,7 +177,6 @@ class ResearchList extends React.Component {
 
   handleUpdate = () => {
     this.setState({ openEdit: false, openSnackEdit: true });
-    // get the new item value
     let data = {
       name: this.state.editItem.name,
       imageUrl: this.state.editItem.imageUrl,
@@ -240,118 +239,26 @@ class ResearchList extends React.Component {
           <AddIcon />
         </Button>
 
-        <Dialog
-          fullScreen
+        <NewResearchItem
+          handleChangeDescription={this.handleChangeDescription}
+          handleChangeImageUrl={this.handleChangeImageUrl}
+          handleChangeName={this.handleChangeName}
+          handleClose={this.handleClose}
+          handleSave={this.handleSave}
           open={this.state.open}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleClose}
-                aria-label="Close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
-              >
-                {" "}
-                Create new research process{" "}
-              </Typography>
-              <Button color="inherit" onClick={this.handleSave}>
-                {" "}
-                save{" "}
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <TextField
-            required
-            id="required"
-            label="Research Name"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeName}
-          />
-          <TextField
-            required
-            id="required"
-            label="Image Url"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeImageUrl}
-          />
-          <TextField
-            required
-            id="required"
-            label="Research Description"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeDescription}
-          />
-        </Dialog>
+          Transition={Transition}
+        />
 
-        <Dialog
-          fullScreen
-          open={this.state.openEdit}
-          onClose={this.handleCloseEdit}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleCloseEdit}
-                aria-label="Close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
-              >
-                {" "}
-                Edit research process{" "}
-              </Typography>
-              <Button color="inherit" onClick={this.handleUpdate}>
-                {" "}
-                Save{" "}
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <TextField
-            required
-            id="required"
-            label="Research Name"
-            className={classes.textField}
-            margin="normal"
-            value={this.state.editItem.name}
-            onChange={this.handleChangeName}
-          />
-          <TextField
-            required
-            id="required"
-            label="Image Url"
-            className={classes.textField}
-            value={this.state.editItem.imageUrl}
-            margin="normal"
-            onChange={this.handleChangeImageUrl}
-          />
-          <TextField
-            required
-            id="required"
-            label="Research Description"
-            className={classes.textField}
-            value={this.state.editItem.description}
-            margin="normal"
-            onChange={this.handleChangeDescription}
-          />
-        </Dialog>
+        <EditResearchItem
+          handleChangeDescription={this.handleChangeDescription}
+          handleChangeImageUrl={this.handleChangeImageUrl}
+          handleChangeName={this.handleChangeName}
+          editItem={this.state.editItem}
+          handleCloseEdit={this.handleCloseEdit}
+          handleUpdate={this.handleUpdate}
+          openEdit={this.state.openEdit}
+          Transition={Transition}
+        />
 
         {researchListCards}
         <Snackbar
