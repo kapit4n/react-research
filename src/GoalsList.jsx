@@ -100,7 +100,7 @@ class GoalsList extends React.Component {
   };
 
   handleChangeDescription = event => {
-    if (this.open) {
+    if (this.state.open) {
       this.setState({
         newItem: Object.assign({}, this.state.newItem, {
           description: event.target.value
@@ -110,7 +110,7 @@ class GoalsList extends React.Component {
   };
 
   handleChangeName = event => {
-    if (this.open) {
+    if (this.state.open) {
       this.setState({
         newItem: Object.assign({}, this.state.newItem, {
           name: event.target.value
@@ -120,7 +120,7 @@ class GoalsList extends React.Component {
   };
 
   handleChangeImageUrl = event => {
-    if (this.open) {
+    if (this.state.open) {
       this.setState({
         newItem: Object.assign({}, this.state.newItem, {
           imageUrl: event.target.value
