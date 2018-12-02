@@ -18,6 +18,7 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import { DataService } from "./services/Api";
 import CardCustom from "./CardCustom";
+import NewGoalItem from "./NewGoalItem";
 
 const styles = theme => ({
   card: {
@@ -100,7 +101,7 @@ class GoalsList extends React.Component {
   };
 
   handleChangeDescription = event => {
-    if (this.open) {
+    if (this.state.open) {
       this.setState({
         newItem: Object.assign({}, this.state.newItem, {
           description: event.target.value
@@ -110,7 +111,7 @@ class GoalsList extends React.Component {
   };
 
   handleChangeName = event => {
-    if (this.open) {
+    if (this.state.open) {
       this.setState({
         newItem: Object.assign({}, this.state.newItem, {
           name: event.target.value
@@ -120,7 +121,7 @@ class GoalsList extends React.Component {
   };
 
   handleChangeImageUrl = event => {
-    if (this.open) {
+    if (this.state.open) {
       this.setState({
         newItem: Object.assign({}, this.state.newItem, {
           imageUrl: event.target.value
@@ -131,10 +132,6 @@ class GoalsList extends React.Component {
 
   handleSelectChange = name => event => {
     this.setState({ [name]: event.target.value });
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
   };
 
   handleClickOpen = () => {
@@ -207,79 +204,18 @@ class GoalsList extends React.Component {
         >
           <AddIcon />
         </Button>
-
-        <Dialog
-          fullScreen
-          open={this.state.open}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleClose}
-                aria-label="Close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
-              >
-                {" "}
-                Create new Goal{" "}
-              </Typography>
-              <Button color="inherit" onClick={this.handleSave}>
-                {" "}
-                save{" "}
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="research-native-simple">Research</InputLabel>
-            <Select
-              native
-              value={this.state.reseachId}
-              onChange={this.handleSelectChange("researchId")}
-              inputProps={{ name: "researchId", id: "research-native-simple" }}
-            >
-              <option value="" />
-              {this.state.researchList.map(data => (
-                <option key={data.id} value={data.id}>
-                  {data.name}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField
-            required
-            id="required"
-            label="Research Name"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeName}
-          />
-          <TextField
-            required
-            id="required"
-            label="Image Url"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeImageUrl}
-          />
-          <TextField
-            required
-            id="required"
-            label="Research Description"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.handleChangeDescription}
-          />
-        </Dialog>
-
         {goalListCards}
+        <NewGoalItem
+          handleChangeDescription={this.handleChangeDescription}
+          handleChangeImageUrl={this.handleChangeImageUrl}
+          handleChangeName={this.handleChangeName}
+          handleClose={this.handleClose}
+          handleSave={this.handleSave}
+          open={this.state.open}
+          Transition={Transition}
+          handleSelectChange={this.handleSelectChange}
+          researchList={this.state.researchList}
+        />
       </div>
     );
   }

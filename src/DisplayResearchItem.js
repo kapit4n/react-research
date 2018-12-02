@@ -11,14 +11,20 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import CardCustom from "./CardCustom";
 
 const styles = theme => ({
-  card: {
+  cardContain: {
     width: "100%",
     display: "inline-block"
   },
+  card: {
+    width: "30%",
+    display: "inline-block"
+  },
+
   media: {
-    height: 215,
+    height: 100,
     paddingTop: 16 // 16:9
   },
   fab: {
@@ -46,6 +52,20 @@ const styles = theme => ({
 });
 
 function DisplayResearchItem(props) {
+  let goalListCards: CardCustom;
+
+  if (props.displayItem.researchGoals) {
+    goalListCards = props.displayItem.researchGoals.map(item => (
+      <CardCustom
+        key={item.id}
+        item={item}
+        classes={props.classes}
+        removeItem={props.removeItem}
+        chips={[item.name]}
+      />
+    ));
+  }
+
   return (
     <Dialog
       fullScreen
@@ -72,7 +92,7 @@ function DisplayResearchItem(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Card className={props.classes.card} key={props.displayItem.id}>
+      <Card className={props.classes.cardContain} key={props.displayItem.id}>
         <CardMedia
           className={props.classes.media}
           image={props.displayItem.imageUrl}
@@ -83,6 +103,7 @@ function DisplayResearchItem(props) {
             {props.displayItem.name}
           </Typography>
           <Typography component="p">{props.displayItem.description}</Typography>
+          <div>{goalListCards}</div>
         </CardContent>
         <CardActions>
           <Button
