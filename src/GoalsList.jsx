@@ -18,6 +18,7 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import { DataService } from "./services/Api";
 import CardCustom from "./CardCustom";
+import NewGoalItem from "./NewGoalItem";
 
 const styles = theme => ({
   card: {
@@ -137,10 +138,6 @@ class GoalsList extends React.Component {
     this.setState({ open: true });
   };
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -207,8 +204,18 @@ class GoalsList extends React.Component {
         >
           <AddIcon />
         </Button>
-
         {goalListCards}
+        <NewGoalItem
+          handleChangeDescription={this.handleChangeDescription}
+          handleChangeImageUrl={this.handleChangeImageUrl}
+          handleChangeName={this.handleChangeName}
+          handleClose={this.handleClose}
+          handleSave={this.handleSave}
+          open={this.state.open}
+          Transition={Transition}
+          handleSelectChange={this.handleSelectChange}
+          researchList={this.state.researchList}
+        />
       </div>
     );
   }

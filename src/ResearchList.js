@@ -242,7 +242,7 @@ class ResearchList extends React.Component {
           className={classes.fab}
           color="primary"
           onClick={this.handleClickOpen}
-        >
+      >
           <AddIcon />
         </Button>
 

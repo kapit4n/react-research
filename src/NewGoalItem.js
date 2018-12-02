@@ -8,6 +8,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 
 const styles = theme => ({
   card: {
@@ -42,13 +45,13 @@ const styles = theme => ({
   }
 });
 
-function NewResearchItem(props) {
+function NewGoalItem(props) {
   return (
     <Dialog
       fullScreen
       open={props.open}
       onClose={props.handleClose}
-      TransitionComponent={Transition}
+      Transition={props.Transition}
     >
       <AppBar className={props.classes.appBar}>
         <Toolbar>
@@ -92,7 +95,7 @@ function NewResearchItem(props) {
       <TextField
         required
         id="required"
-        label="Research Name"
+        label="Goal Name"
         className={props.classes.textField}
         margin="normal"
         onChange={props.handleChangeName}
@@ -117,4 +120,4 @@ function NewResearchItem(props) {
   );
 }
 
-export default withStyles(styles)(NewResearchItem);
+export default withStyles(styles)(NewGoalItem);
