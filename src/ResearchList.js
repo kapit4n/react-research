@@ -126,11 +126,12 @@ class ResearchList extends React.Component {
   };
 
   loadItems = () => {
-    fetch(`${DataService.researchApi}`)
+    fetch(`${DataService.researchApi}?filter[include]=researchGoals`)
       .then(function(response) {
         return response.json();
       })
       .then(data => {
+        console.log(data);
         this.setState({ items: data });
       });
   };
