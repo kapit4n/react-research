@@ -14,10 +14,15 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardCustom from "./CardCustom";
 
 const styles = theme => ({
-  card: {
+  cardContain: {
     width: "100%",
     display: "inline-block"
   },
+  card: {
+    width: "30%",
+    display: "inline-block"
+  },
+
   media: {
     height: 100,
     paddingTop: 16 // 16:9
@@ -87,7 +92,7 @@ function DisplayResearchItem(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Card className={props.classes.card} key={props.displayItem.id}>
+      <Card className={props.classes.cardContain} key={props.displayItem.id}>
         <CardMedia
           className={props.classes.media}
           image={props.displayItem.imageUrl}
