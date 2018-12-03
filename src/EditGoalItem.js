@@ -8,6 +8,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 
 const styles = theme => ({
   card: {
@@ -42,7 +45,7 @@ const styles = theme => ({
   }
 });
 
-function EditResearchItem(props) {
+function EditGoalItem(props) {
   return (
     <Dialog
       fullScreen
@@ -65,18 +68,34 @@ function EditResearchItem(props) {
             className={props.classes.flex}
           >
             {" "}
-            Edit research process{" "}
+            Update Goal{" "}
           </Typography>
           <Button color="inherit" onClick={props.handleUpdate}>
             {" "}
-            Save{" "}
+            save{" "}
           </Button>
         </Toolbar>
       </AppBar>
+      <FormControl className={props.classes.formControl}>
+        <InputLabel htmlFor="research-native-simple">Research</InputLabel>
+        <Select
+          native
+          value={props.researchId}
+          onChange={props.handleSelectChange("researchId")}
+          inputProps={{ name: "researchId", id: "research-native-simple" }}
+        >
+          <option value="" />
+          {props.researchList.map(data => (
+            <option key={data.id} value={data.id}>
+              {data.name}
+            </option>
+          ))}
+        </Select>
+      </FormControl>
       <TextField
         required
         id="required"
-        label="Research Name"
+        label="Goal Name"
         className={props.classes.textField}
         margin="normal"
         value={props.editItem.name}
@@ -94,7 +113,7 @@ function EditResearchItem(props) {
       <TextField
         required
         id="required"
-        label="Research Description"
+        label="Goal Description"
         className={props.classes.textField}
         value={props.editItem.description}
         margin="normal"
@@ -106,4 +125,4 @@ function EditResearchItem(props) {
   );
 }
 
-export default withStyles(styles)(EditResearchItem);
+export default withStyles(styles)(EditGoalItem);

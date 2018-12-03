@@ -51,7 +51,7 @@ function NewGoalItem(props) {
       fullScreen
       open={props.open}
       onClose={props.handleClose}
-      Transition={props.Transition}
+      TransitionComponent={props.Transition}
     >
       <AppBar className={props.classes.appBar}>
         <Toolbar>
@@ -80,7 +80,7 @@ function NewGoalItem(props) {
         <InputLabel htmlFor="research-native-simple">Research</InputLabel>
         <Select
           native
-          value={props.reseachId}
+          value={props.researchId}
           onChange={props.handleSelectChange("researchId")}
           inputProps={{ name: "researchId", id: "research-native-simple" }}
         >
@@ -111,10 +111,12 @@ function NewGoalItem(props) {
       <TextField
         required
         id="required"
-        label="Research Description"
+        label="Goal Description"
         className={props.classes.textField}
         margin="normal"
         onChange={props.handleChangeDescription}
+        multiline={true}
+        rows={5}
       />
     </Dialog>
   );

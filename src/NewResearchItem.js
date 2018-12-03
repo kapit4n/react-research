@@ -98,6 +98,8 @@ function NewResearchItem(props) {
           className={props.classes.textField}
           margin="normal"
           onChange={props.handleChangeDescription}
+          multiline={true}
+          rows={5}
         />
       </Dialog>
     </div>

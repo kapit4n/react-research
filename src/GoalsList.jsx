@@ -2,27 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
-import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 
 import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/Close";
 import { DataService } from "./services/Api";
 import CardCustom from "./CardCustom";
 import NewGoalItem from "./NewGoalItem";
+import EditGoalItem from "./EditGoalItem";
 
 const styles = theme => ({
   card: {
-    width: 400,
+    width: "30%",
     display: "inline-block",
     margin: 10
   },
@@ -68,9 +59,11 @@ class GoalsList extends React.Component {
     super(props);
     this.state = {
       open: false,
+      openEdit: false,
       researchList: [],
       goalList: [],
       newItem: {},
+      editItem: {},
       researchId: ""
     };
     this.loadResearchList();
@@ -107,6 +100,12 @@ class GoalsList extends React.Component {
           description: event.target.value
         })
       });
+    } else {
+      this.setState({
+        editItem: Object.assign({}, this.state.editItem, {
+          description: event.target.value
+        })
+      });
     }
   };
 
@@ -117,6 +116,12 @@ class GoalsList extends React.Component {
           name: event.target.value
         })
       });
+    } else {
+      this.setState({
+        editItem: Object.assign({}, this.state.editItem, {
+          name: event.target.value
+        })
+      });
     }
   };
 
@@ -124,6 +129,12 @@ class GoalsList extends React.Component {
     if (this.state.open) {
       this.setState({
         newItem: Object.assign({}, this.state.newItem, {
+          imageUrl: event.target.value
+        })
+      });
+    } else {
+      this.setState({
+        editItem: Object.assign({}, this.state.editItem, {
           imageUrl: event.target.value
         })
       });
@@ -138,8 +149,20 @@ class GoalsList extends React.Component {
     this.setState({ open: true });
   };
 
+  handleClickOpenEdit = goal => {
+    this.setState({
+      openEdit: true,
+      editItem: goal,
+      researchId: goal.researchId
+    });
+  };
+
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  handleCloseEdit = () => {
+    this.setState({ openEdit: false });
   };
 
   handleSave = () => {
@@ -171,6 +194,35 @@ class GoalsList extends React.Component {
       });
   };
 
+  handleUpdate = () => {
+    this.setState({ openEdit: false });
+    // get the new item value
+    let data = {
+      researchId: this.state.researchId,
+      name: this.state.editItem.name,
+      imageUrl: this.state.editItem.imageUrl,
+      description: this.state.editItem.description
+    };
+
+    this.setState({ editItem: {} });
+
+    let fetchData = {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "content-type": "application/json"
+      }
+    };
+
+    fetch(DataService.researchGoalApi + "/" + this.state.editItem.id, fetchData)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(data => {
+        this.loadGoalList();
+      });
+  };
+
   removeItem = itemId => {
     fetch(DataService.researchGoalApi + "/" + itemId, { method: "DELETE" })
       .then(function(response) {
@@ -191,6 +243,7 @@ class GoalsList extends React.Component {
         classes={classes}
         removeItem={this.removeItem}
         chips={[item.research.name]}
+        handleClickOpenEdit={this.handleClickOpenEdit}
       />
     ));
 
@@ -215,6 +268,19 @@ class GoalsList extends React.Component {
           Transition={Transition}
           handleSelectChange={this.handleSelectChange}
           researchList={this.state.researchList}
+        />
+        <EditGoalItem
+          handleChangeDescription={this.handleChangeDescription}
+          handleChangeImageUrl={this.handleChangeImageUrl}
+          handleChangeName={this.handleChangeName}
+          handleCloseEdit={this.handleCloseEdit}
+          handleUpdate={this.handleUpdate}
+          openEdit={this.state.openEdit}
+          Transition={Transition}
+          handleSelectChange={this.handleSelectChange}
+          researchList={this.state.researchList}
+          editItem={this.state.editItem}
+          researchId={this.state.researchId}
         />
       </div>
     );
