@@ -45,19 +45,19 @@ const styles = theme => ({
   }
 });
 
-function NewGoalItem(props) {
+function EditGoalItem(props) {
   return (
     <Dialog
       fullScreen
-      open={props.open}
-      onClose={props.handleClose}
+      open={props.openEdit}
+      onClose={props.handleCloseEdit}
       TransitionComponent={props.Transition}
     >
       <AppBar className={props.classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
-            onClick={props.handleClose}
+            onClick={props.handleCloseEdit}
             aria-label="Close"
           >
             <CloseIcon />
@@ -68,9 +68,9 @@ function NewGoalItem(props) {
             className={props.classes.flex}
           >
             {" "}
-            Create new Goal{" "}
+            Update Goal{" "}
           </Typography>
-          <Button color="inherit" onClick={props.handleSave}>
+          <Button color="inherit" onClick={props.handleUpdate}>
             {" "}
             save{" "}
           </Button>
@@ -98,6 +98,7 @@ function NewGoalItem(props) {
         label="Goal Name"
         className={props.classes.textField}
         margin="normal"
+        value={props.editItem.name}
         onChange={props.handleChangeName}
       />
       <TextField
@@ -105,6 +106,7 @@ function NewGoalItem(props) {
         id="required"
         label="Image Url"
         className={props.classes.textField}
+        value={props.editItem.imageUrl}
         margin="normal"
         onChange={props.handleChangeImageUrl}
       />
@@ -113,6 +115,7 @@ function NewGoalItem(props) {
         id="required"
         label="Goal Description"
         className={props.classes.textField}
+        value={props.editItem.description}
         margin="normal"
         onChange={props.handleChangeDescription}
         multiline={true}
@@ -122,4 +125,4 @@ function NewGoalItem(props) {
   );
 }
 
-export default withStyles(styles)(NewGoalItem);
+export default withStyles(styles)(EditGoalItem);
