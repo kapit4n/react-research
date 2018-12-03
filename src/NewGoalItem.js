@@ -111,10 +111,12 @@ function NewGoalItem(props) {
       <TextField
         required
         id="required"
-        label="Research Description"
+        label="Goal Description"
         className={props.classes.textField}
         margin="normal"
         onChange={props.handleChangeDescription}
+        multiline={true}
+        rows={5}
       />
     </Dialog>
   );

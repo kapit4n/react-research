@@ -22,7 +22,7 @@ import NewGoalItem from "./NewGoalItem";
 
 const styles = theme => ({
   card: {
-    width: 400,
+    width: "30%",
     display: "inline-block",
     margin: 10
   },

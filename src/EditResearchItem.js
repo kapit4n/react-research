@@ -99,6 +99,8 @@ function EditResearchItem(props) {
         value={props.editItem.description}
         margin="normal"
         onChange={props.handleChangeDescription}
+        multiline={true}
+        rows={5}
       />
     </Dialog>
   );

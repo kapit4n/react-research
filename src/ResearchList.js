@@ -13,7 +13,7 @@ import DisplayResearchItem from "./DisplayResearchItem";
 
 const styles = theme => ({
   card: {
-    width: 400,
+    width: 350,
     display: "inline-block"
   },
   media: {
@@ -242,7 +242,7 @@ class ResearchList extends React.Component {
           className={classes.fab}
           color="primary"
           onClick={this.handleClickOpen}
-      >
+        >
           <AddIcon />
         </Button>
 
