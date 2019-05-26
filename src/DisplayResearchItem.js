@@ -92,18 +92,22 @@ function DisplayResearchItem(props) {
           </Typography>
         </Toolbar>
       </AppBar>
+      <div>
+
       <Card className={props.classes.cardContain} key={props.displayItem.id}>
         <CardMedia
           className={props.classes.media}
           image={props.displayItem.imageUrl}
           title="Contemplative Reptile"
-        />
-        <CardContent>
+          />
+        <CardContent style={{height: 500}}>
           <Typography gutterBottom variant="headline" component="h3">
             {props.displayItem.name}
           </Typography>
           <Typography component="p">{props.displayItem.description}</Typography>
-          <div>{goalListCards}</div>
+          <div style={{height: 400, overflow:'scroll'}}>
+            {goalListCards}
+          </div>
         </CardContent>
         <CardActions>
           <Button
@@ -118,11 +122,12 @@ function DisplayResearchItem(props) {
             size="small"
             color="primary"
             onClick={() => props.handleClickOpenEdit(props.displayItem)}
-          >
+            >
             Edit
           </Button>
         </CardActions>
       </Card>
+      </div>
     </Dialog>
   );
 }

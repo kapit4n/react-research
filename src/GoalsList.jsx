@@ -13,7 +13,7 @@ import EditGoalItem from "./EditGoalItem";
 
 const styles = theme => ({
   card: {
-    width: "30%",
+    width: 350,
     display: "inline-block",
     margin: 10
   },
