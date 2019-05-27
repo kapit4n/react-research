@@ -33,5 +33,8 @@ export default theme => ({
   },
   chip: {
     margin: 10
+  },
+  dialog: {
+    padding: 100
   }
 })
