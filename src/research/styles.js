@@ -5,16 +5,15 @@ export default theme => ({
   },
   card: {
     width: "30%",
-    display: "inline-block"
+    display: "inline-block",
+    margin: 10
   },
   media: {
     height: 100,
     paddingTop: 16 // 16:9
   },
   fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
+    display: 'block'
   },
   appBar: {
     position: "relative"

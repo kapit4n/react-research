@@ -2,8 +2,7 @@ export default theme => ({
   card: {
     width: 350,
     display: "inline-block",
-    margin: 10,
-    padding: 10
+    margin: 10
   },
   media: {
     height: 215,

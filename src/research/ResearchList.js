@@ -10,38 +10,8 @@ import CardCustom from "../common/CardCustom";
 import NewResearchItem from "./NewResearchItem";
 import EditResearchItem from "./EditResearchItem";
 import DisplayResearchItem from "./DisplayResearchItem";
+import styles from './styles';
 
-const styles = theme => ({
-  card: {
-    width: 350,
-    display: "inline-block",
-    margin: 10
-  },
-  media: {
-    height: 215,
-    paddingTop: 16 // 16:9
-  },
-  fab: {
-    display: 'block'
-  },
-  appBar: {
-    position: "relative"
-  },
-  flex: {
-    flex: 1
-  },
-  textField: {
-    marginLeft: 10,
-    marginRight: 10,
-    width: "80%"
-  },
-  snackbar: {
-    position: "absolute"
-  },
-  snackbarContent: {
-    width: 360
-  }
-});
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
