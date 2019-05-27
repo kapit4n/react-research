@@ -9,9 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { mailFolderListItems, otherMailFolderListItems } from "./tileData";
 import { Switch, Route } from "react-router-dom";
-import ResearchList from "./ResearchList";
-import GoalsList from "./GoalsList";
-import StepsList from "./StepsList";
+import ResearchList from "./research/ResearchList";
+import GoalsList from "./goal/GoalsList";
+import StepsList from "./step/StepsList";
 
 function ResultsList(props) {
   return <h1>StepsList,</h1>;

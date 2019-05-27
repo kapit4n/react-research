@@ -26,7 +26,7 @@ function CardCustom(props) {
             />
           ))}
         </Typography>
-        <Typography component="p">{props.item.description}</Typography>
+        <Typography variant="subtitle1" style={{height: 58, 'white-space': 'pre-line'}} gutterBottom noWrap>{props.item.description}</Typography>
       </CardContent>
       <CardActions>
         <Button

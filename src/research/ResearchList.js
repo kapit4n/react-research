@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
-
+import Snackbar from "@material-ui/core/Snackbar";
 import AddIcon from "@material-ui/icons/Add";
-import { DataService } from "./services/Api";
-import CardCustom from "./CardCustom";
-import NewGoalItem from "./NewGoalItem";
-import EditGoalItem from "./EditGoalItem";
+import { DataService } from "../services/Api";
+import CardCustom from "../common/CardCustom";
+import NewResearchItem from "./NewResearchItem";
+import EditResearchItem from "./EditResearchItem";
+import DisplayResearchItem from "./DisplayResearchItem";
 
 const styles = theme => ({
   card: {
@@ -19,8 +19,7 @@ const styles = theme => ({
   },
   media: {
     height: 215,
-    paddingTop: 16, // 16:9
-    margin: 10
+    paddingTop: 16 // 16:9
   },
   fab: {
     position: "absolute",
@@ -38,15 +37,11 @@ const styles = theme => ({
     marginRight: 10,
     width: "80%"
   },
-  formControl: {
-    margin: 10,
-    minWidth: 120
+  snackbar: {
+    position: "absolute"
   },
-  selectEmpty: {
-    marginTop: 10
-  },
-  chip: {
-    margin: 10
+  snackbarContent: {
+    width: 360
   }
 });
 
@@ -54,55 +49,33 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class GoalsList extends React.Component {
+class ResearchList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
       openEdit: false,
-      researchList: [],
-      goalList: [],
-      newItem: {},
+      openDisplay: false,
+      items: [],
       editItem: {},
-      researchId: ""
+      displayItem: {},
+      newItem: {},
+      openSnack: false
     };
-    this.loadResearchList();
-    this.loadGoalList();
+
+    this.loadItems();
   }
 
-  // load all values
-  loadResearchList = () => {
-    // load research list
-    fetch(DataService.researchApi)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({ researchList: data });
-      });
-  };
-
-  // load all values
-  loadGoalList = () => {
-    fetch(`${DataService.researchGoalApi}/?${DataService.filterInResearch}`)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({ goalList: data });
-      });
-  };
-
   handleChangeDescription = event => {
-    if (this.state.open) {
+    if (this.state.openEdit) {
       this.setState({
-        newItem: Object.assign({}, this.state.newItem, {
+        editItem: Object.assign({}, this.state.editItem, {
           description: event.target.value
         })
       });
     } else {
       this.setState({
-        editItem: Object.assign({}, this.state.editItem, {
+        newItem: Object.assign({}, this.state.newItem, {
           description: event.target.value
         })
       });
@@ -110,15 +83,15 @@ class GoalsList extends React.Component {
   };
 
   handleChangeName = event => {
-    if (this.state.open) {
+    if (this.state.openEdit) {
       this.setState({
-        newItem: Object.assign({}, this.state.newItem, {
+        editItem: Object.assign({}, this.state.editItem, {
           name: event.target.value
         })
       });
     } else {
       this.setState({
-        editItem: Object.assign({}, this.state.editItem, {
+        newItem: Object.assign({}, this.state.newItem, {
           name: event.target.value
         })
       });
@@ -126,52 +99,67 @@ class GoalsList extends React.Component {
   };
 
   handleChangeImageUrl = event => {
-    if (this.state.open) {
+    if (this.state.openEdit) {
       this.setState({
-        newItem: Object.assign({}, this.state.newItem, {
+        editItem: Object.assign({}, this.state.editItem, {
           imageUrl: event.target.value
         })
       });
     } else {
       this.setState({
-        editItem: Object.assign({}, this.state.editItem, {
+        newItem: Object.assign({}, this.state.newItem, {
           imageUrl: event.target.value
         })
       });
     }
   };
 
-  handleSelectChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
-
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
-  handleClickOpenEdit = goal => {
-    this.setState({
-      openEdit: true,
-      editItem: goal,
-      researchId: goal.researchId
-    });
+  handleClickOpenEdit = product => {
+    this.setState({ openEdit: true, editItem: product });
+  };
+
+  handleClickOpenDisplay = product => {
+    this.setState({ openDisplay: true, displayItem: product });
+  };
+
+  loadItems = () => {
+    fetch(`${DataService.researchApi}?filter[include]=researchGoals`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        this.setState({ items: data });
+      });
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, openSnack: true });
   };
 
   handleCloseEdit = () => {
     this.setState({ openEdit: false });
   };
 
+  handleCloseDisplay = () => {
+    this.setState({ openDisplay: false });
+  };
+
+  handleCloseSnack = () => {
+    this.setState({ openSnack: false });
+  };
+
   handleSave = () => {
-    this.setState({ open: false });
-    // get the new item value
+    this.setState({ open: false, openSnack: true });
     let data = {
-      researchId: this.state.researchId,
       name: this.state.newItem.name,
       imageUrl: this.state.newItem.imageUrl,
+      startDate: "2018-06-25T16:22:57.779Z",
+      endDate: "2018-09-25T16:22:57.779Z",
       description: this.state.newItem.description
     };
 
@@ -185,22 +173,22 @@ class GoalsList extends React.Component {
       }
     };
 
-    fetch(DataService.researchGoalApi, fetchData)
+    fetch(DataService.researchApi, fetchData)
       .then(function(response) {
         return response.json();
       })
       .then(data => {
-        this.loadGoalList();
+        this.loadItems();
       });
   };
 
   handleUpdate = () => {
-    this.setState({ openEdit: false });
-    // get the new item value
+    this.setState({ openEdit: false, openSnackEdit: true });
     let data = {
-      researchId: this.state.researchId,
       name: this.state.editItem.name,
       imageUrl: this.state.editItem.imageUrl,
+      startDate: "2018-06-25T16:22:57.779Z",
+      endDate: "2018-09-25T16:22:57.779Z",
       description: this.state.editItem.description
     };
 
@@ -214,36 +202,37 @@ class GoalsList extends React.Component {
       }
     };
 
-    fetch(DataService.researchGoalApi + "/" + this.state.editItem.id, fetchData)
+    fetch(DataService.researchApi + "/" + this.state.editItem.id, fetchData)
       .then(function(response) {
         return response.json();
       })
       .then(data => {
-        this.loadGoalList();
+        this.loadItems();
       });
   };
 
   removeItem = itemId => {
-    fetch(DataService.researchGoalApi + "/" + itemId, { method: "DELETE" })
+    fetch(DataService.researchApi + "/" + itemId, { method: "DELETE" })
       .then(function(response) {
         return response.json();
       })
       .then(data => {
-        this.loadGoalList();
+        this.loadItems();
       });
   };
 
   render() {
     const { classes } = this.props;
 
-    const goalListCards = this.state.goalList.map(item => (
+    const researchListCards = this.state.items.map(item => (
       <CardCustom
         key={item.id}
         item={item}
         classes={classes}
         removeItem={this.removeItem}
-        chips={[item.research.name]}
         handleClickOpenEdit={this.handleClickOpenEdit}
+        handleClickOpenDisplay={this.handleClickOpenDisplay}
+        chips={[]}
       />
     ));
 
@@ -257,8 +246,8 @@ class GoalsList extends React.Component {
         >
           <AddIcon />
         </Button>
-        {goalListCards}
-        <NewGoalItem
+
+        <NewResearchItem
           handleChangeDescription={this.handleChangeDescription}
           handleChangeImageUrl={this.handleChangeImageUrl}
           handleChangeName={this.handleChangeName}
@@ -266,29 +255,56 @@ class GoalsList extends React.Component {
           handleSave={this.handleSave}
           open={this.state.open}
           Transition={Transition}
-          handleSelectChange={this.handleSelectChange}
-          researchList={this.state.researchList}
         />
-        <EditGoalItem
+
+        <EditResearchItem
           handleChangeDescription={this.handleChangeDescription}
           handleChangeImageUrl={this.handleChangeImageUrl}
           handleChangeName={this.handleChangeName}
+          editItem={this.state.editItem}
           handleCloseEdit={this.handleCloseEdit}
           handleUpdate={this.handleUpdate}
           openEdit={this.state.openEdit}
           Transition={Transition}
-          handleSelectChange={this.handleSelectChange}
-          researchList={this.state.researchList}
-          editItem={this.state.editItem}
-          researchId={this.state.researchId}
+        />
+
+        <DisplayResearchItem
+          displayItem={this.state.displayItem}
+          handleCloseDisplay={this.handleCloseDisplay}
+          openDisplay={this.state.openDisplay}
+          Transition={Transition}
+          removeItem={this.removeItem}
+          handleClickOpenEdit={this.handleClickOpenEdit}
+        />
+
+        {researchListCards}
+        <Snackbar
+          open={this.state.openSnack}
+          autoHideDuration={4000}
+          onClose={this.handleCloseSnack}
+          ContentProps={{
+            "aria-describedby": "snackbar-fab-message-id",
+            className: classes.snackbarContent
+          }}
+          message={<span id="snackbar-fab-message-id">Archived</span>}
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={this.handleCloseSnack}
+            >
+              Undo
+            </Button>
+          }
+          className={classes.snackbar}
         />
       </div>
     );
   }
 }
 
-GoalsList.propTypes = {
+ResearchList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(GoalsList);
+export default withStyles(styles)(ResearchList);
