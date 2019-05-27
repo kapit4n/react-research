@@ -218,6 +218,7 @@ class GoalsList extends React.Component {
       <div>
         <Button
           className={classes.fab}
+          variant="contained"
           color="primary"
           onClick={this.handleClickOpen}
         >

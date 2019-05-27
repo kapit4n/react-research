@@ -22,9 +22,7 @@ const styles = theme => ({
     paddingTop: 16 // 16:9
   },
   fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
+    display: 'block'
   },
   appBar: {
     position: "relative"
@@ -241,6 +239,7 @@ class ResearchList extends React.Component {
         <Button
           className={classes.fab}
           color="primary"
+          variant="contained"
           onClick={this.handleClickOpen}
         >
           <AddIcon />

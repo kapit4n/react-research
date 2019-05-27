@@ -11,9 +11,7 @@ export default theme => ({
     margin: 10
   },
   fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
+    display: 'block'
   },
   appBar: {
     position: "relative"
