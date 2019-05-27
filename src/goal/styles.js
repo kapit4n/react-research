@@ -10,7 +10,8 @@ export default theme => ({
     margin: 10
   },
   fab: {
-    display: 'block'
+    display: 'block',
+    margin: 10
   },
   appBar: {
     position: "relative"
@@ -33,5 +34,4 @@ export default theme => ({
   chip: {
     margin: 10
   }
-    
 })

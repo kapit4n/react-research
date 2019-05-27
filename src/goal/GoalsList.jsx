@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
+import Fab from "@material-ui/core/Fab";
 import { makeStyles } from '@material-ui/styles';
 
 import AddIcon from "@material-ui/icons/Add";
@@ -215,15 +216,11 @@ class GoalsList extends React.Component {
     ));
 
     return (
-      <div>
-        <Button
-          className={classes.fab}
-          variant="contained"
-          color="primary"
-          onClick={this.handleClickOpen}
-        >
+      <div style={{padding: 10}}>
+        <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.handleClickOpen}>
           <AddIcon />
-        </Button>
+        </Fab>
+
         {goalListCards}
         <NewGoalItem
           handleChangeDescription={this.handleChangeDescription}

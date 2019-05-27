@@ -50,6 +50,7 @@ function NewResearchItem(props) {
         open={props.open}
         onClose={props.handleClose}
         TransitionComponent={props.Transition}
+        style={{padding: 150}}
       >
         <AppBar className={props.classes.appBar}>
           <Toolbar>

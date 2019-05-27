@@ -4,14 +4,15 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
+import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+
 import { DataService } from "../services/Api";
 import CardCustom from "../common/CardCustom";
 import NewResearchItem from "./NewResearchItem";
 import EditResearchItem from "./EditResearchItem";
 import DisplayResearchItem from "./DisplayResearchItem";
-import styles from './styles';
-
+import styles from "./styles";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -205,15 +206,10 @@ class ResearchList extends React.Component {
     ));
 
     return (
-      <div>
-        <Button
-          className={classes.fab}
-          color="primary"
-          variant="contained"
-          onClick={this.handleClickOpen}
-        >
+      <div style={{padding: 10}}>
+        <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.handleClickOpen}>
           <AddIcon />
-        </Button>
+        </Fab>
 
         <NewResearchItem
           handleChangeDescription={this.handleChangeDescription}
