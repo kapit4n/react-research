@@ -60,7 +60,6 @@ function EditResearchItem(props) {
             <CloseIcon />
           </IconButton>
           <Typography
-            variant="title"
             color="inherit"
             className={props.classes.flex}
           >

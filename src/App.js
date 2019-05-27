@@ -42,7 +42,6 @@ const styles = theme => ({
   content: {
     flexGrow: 2,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
     minWidth: "75%" // So the Typography noWrap works
   },
   toolbar: theme.mixins.toolbar
@@ -55,7 +54,7 @@ function App(props) {
     <div className={classes.root}>
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="title" color="inherit" noWrap>
+          <Typography color="inherit" noWrap>
             Research Platform
           </Typography>
         </Toolbar>

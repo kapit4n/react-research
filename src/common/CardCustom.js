@@ -36,7 +36,6 @@ function CardCustom(props) {
         >
           remove
         </Button>
-
         <Button
           size="small"
           color="primary"

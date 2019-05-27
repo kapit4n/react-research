@@ -239,7 +239,6 @@ class ResearchList extends React.Component {
     return (
       <div>
         <Button
-          variant="fab"
           className={classes.fab}
           color="primary"
           onClick={this.handleClickOpen}
