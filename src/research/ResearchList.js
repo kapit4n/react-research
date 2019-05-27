@@ -5,8 +5,8 @@ import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
 import AddIcon from "@material-ui/icons/Add";
-import { DataService } from "./services/Api";
-import CardCustom from "./CardCustom";
+import { DataService } from "../services/Api";
+import CardCustom from "../common/CardCustom";
 import NewResearchItem from "./NewResearchItem";
 import EditResearchItem from "./EditResearchItem";
 import DisplayResearchItem from "./DisplayResearchItem";
@@ -14,7 +14,8 @@ import DisplayResearchItem from "./DisplayResearchItem";
 const styles = theme => ({
   card: {
     width: 350,
-    display: "inline-block"
+    display: "inline-block",
+    margin: 10
   },
   media: {
     height: 215,
@@ -238,7 +239,6 @@ class ResearchList extends React.Component {
     return (
       <div>
         <Button
-          variant="fab"
           className={classes.fab}
           color="primary"
           onClick={this.handleClickOpen}

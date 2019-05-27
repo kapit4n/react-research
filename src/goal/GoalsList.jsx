@@ -4,59 +4,26 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
+import { makeStyles } from '@material-ui/styles';
 
 import AddIcon from "@material-ui/icons/Add";
-import { DataService } from "./services/Api";
-import CardCustom from "./CardCustom";
+import { DataService } from "../services/Api";
+import CardCustom from "../common/CardCustom";
 import NewGoalItem from "./NewGoalItem";
 import EditGoalItem from "./EditGoalItem";
 
-const styles = theme => ({
-  card: {
-    width: 350,
-    display: "inline-block",
-    margin: 10
-  },
-  media: {
-    height: 215,
-    paddingTop: 16, // 16:9
-    margin: 10
-  },
-  fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
-  },
-  appBar: {
-    position: "relative"
-  },
-  flex: {
-    flex: 1
-  },
-  textField: {
-    marginLeft: 10,
-    marginRight: 10,
-    width: "80%"
-  },
-  formControl: {
-    margin: 10,
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: 10
-  },
-  chip: {
-    margin: 10
-  }
-});
+import styles from './styles';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
 class GoalsList extends React.Component {
+  classes = {};
+
   constructor(props) {
     super(props);
+    this.classes = makeStyles(styles);
     this.state = {
       open: false,
       openEdit: false,
@@ -250,7 +217,6 @@ class GoalsList extends React.Component {
     return (
       <div>
         <Button
-          variant="fab"
           className={classes.fab}
           color="primary"
           onClick={this.handleClickOpen}

@@ -45,32 +45,31 @@ const styles = theme => ({
   }
 });
 
-function EditGoalItem(props) {
+function NewGoalItem(props) {
   return (
     <Dialog
       fullScreen
-      open={props.openEdit}
-      onClose={props.handleCloseEdit}
+      open={props.open}
+      onClose={props.handleClose}
       TransitionComponent={props.Transition}
     >
       <AppBar className={props.classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
-            onClick={props.handleCloseEdit}
+            onClick={props.handleClose}
             aria-label="Close"
           >
             <CloseIcon />
           </IconButton>
           <Typography
-            variant="title"
             color="inherit"
             className={props.classes.flex}
           >
             {" "}
-            Update Goal{" "}
+            Create new Goal{" "}
           </Typography>
-          <Button color="inherit" onClick={props.handleUpdate}>
+          <Button color="inherit" onClick={props.handleSave}>
             {" "}
             save{" "}
           </Button>
@@ -98,7 +97,6 @@ function EditGoalItem(props) {
         label="Goal Name"
         className={props.classes.textField}
         margin="normal"
-        value={props.editItem.name}
         onChange={props.handleChangeName}
       />
       <TextField
@@ -106,7 +104,6 @@ function EditGoalItem(props) {
         id="required"
         label="Image Url"
         className={props.classes.textField}
-        value={props.editItem.imageUrl}
         margin="normal"
         onChange={props.handleChangeImageUrl}
       />
@@ -115,7 +112,6 @@ function EditGoalItem(props) {
         id="required"
         label="Goal Description"
         className={props.classes.textField}
-        value={props.editItem.description}
         margin="normal"
         onChange={props.handleChangeDescription}
         multiline={true}
@@ -125,4 +121,4 @@ function EditGoalItem(props) {
   );
 }
 
-export default withStyles(styles)(EditGoalItem);
+export default withStyles(styles)(NewGoalItem);

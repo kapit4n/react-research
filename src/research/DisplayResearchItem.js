@@ -11,48 +11,12 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardCustom from "./CardCustom";
+import CardCustom from "../common/CardCustom";
 
-const styles = theme => ({
-  cardContain: {
-    width: "100%",
-    display: "inline-block"
-  },
-  card: {
-    width: "30%",
-    display: "inline-block"
-  },
-
-  media: {
-    height: 100,
-    paddingTop: 16 // 16:9
-  },
-  fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
-  },
-  appBar: {
-    position: "relative"
-  },
-  flex: {
-    flex: 1
-  },
-  textField: {
-    marginLeft: 10,
-    marginRight: 10,
-    width: "100%"
-  },
-  snackbar: {
-    position: "absolute"
-  },
-  snackbarContent: {
-    width: 360
-  }
-});
+import styles from './styles';
 
 function DisplayResearchItem(props) {
-  let goalListCards: CardCustom;
+  let goalListCards = {};
 
   if (props.displayItem.researchGoals) {
     goalListCards = props.displayItem.researchGoals.map(item => (
@@ -83,7 +47,6 @@ function DisplayResearchItem(props) {
             <CloseIcon />
           </IconButton>
           <Typography
-            variant="title"
             color="inherit"
             className={props.classes.flex}
           >
@@ -105,7 +68,7 @@ function DisplayResearchItem(props) {
             {props.displayItem.name}
           </Typography>
           <Typography component="p">{props.displayItem.description}</Typography>
-          <div style={{height: 400, overflow:'scroll'}}>
+          <div style={{height: 440, overflow:'scroll'}}>
             {goalListCards}
           </div>
         </CardContent>

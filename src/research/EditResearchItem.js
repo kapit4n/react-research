@@ -8,9 +8,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
 
 const styles = theme => ({
   card: {
@@ -45,59 +42,43 @@ const styles = theme => ({
   }
 });
 
-function NewGoalItem(props) {
+function EditResearchItem(props) {
   return (
     <Dialog
       fullScreen
-      open={props.open}
-      onClose={props.handleClose}
+      open={props.openEdit}
+      onClose={props.handleCloseEdit}
       TransitionComponent={props.Transition}
     >
       <AppBar className={props.classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
-            onClick={props.handleClose}
+            onClick={props.handleCloseEdit}
             aria-label="Close"
           >
             <CloseIcon />
           </IconButton>
           <Typography
-            variant="title"
             color="inherit"
             className={props.classes.flex}
           >
             {" "}
-            Create new Goal{" "}
+            Edit research process{" "}
           </Typography>
-          <Button color="inherit" onClick={props.handleSave}>
+          <Button color="inherit" onClick={props.handleUpdate}>
             {" "}
-            save{" "}
+            Save{" "}
           </Button>
         </Toolbar>
       </AppBar>
-      <FormControl className={props.classes.formControl}>
-        <InputLabel htmlFor="research-native-simple">Research</InputLabel>
-        <Select
-          native
-          value={props.researchId}
-          onChange={props.handleSelectChange("researchId")}
-          inputProps={{ name: "researchId", id: "research-native-simple" }}
-        >
-          <option value="" />
-          {props.researchList.map(data => (
-            <option key={data.id} value={data.id}>
-              {data.name}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
       <TextField
         required
         id="required"
-        label="Goal Name"
+        label="Research Name"
         className={props.classes.textField}
         margin="normal"
+        value={props.editItem.name}
         onChange={props.handleChangeName}
       />
       <TextField
@@ -105,14 +86,16 @@ function NewGoalItem(props) {
         id="required"
         label="Image Url"
         className={props.classes.textField}
+        value={props.editItem.imageUrl}
         margin="normal"
         onChange={props.handleChangeImageUrl}
       />
       <TextField
         required
         id="required"
-        label="Goal Description"
+        label="Research Description"
         className={props.classes.textField}
+        value={props.editItem.description}
         margin="normal"
         onChange={props.handleChangeDescription}
         multiline={true}
@@ -122,4 +105,4 @@ function NewGoalItem(props) {
   );
 }
 
-export default withStyles(styles)(NewGoalItem);
+export default withStyles(styles)(EditResearchItem);

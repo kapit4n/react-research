@@ -9,9 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { mailFolderListItems, otherMailFolderListItems } from "./tileData";
 import { Switch, Route } from "react-router-dom";
-import ResearchList from "./ResearchList";
-import GoalsList from "./GoalsList";
-import StepsList from "./StepsList";
+import ResearchList from "./research/ResearchList";
+import GoalsList from "./goal/GoalsList";
+import StepsList from "./step/StepsList";
 
 function ResultsList(props) {
   return <h1>StepsList,</h1>;
@@ -42,7 +42,6 @@ const styles = theme => ({
   content: {
     flexGrow: 2,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
     minWidth: "75%" // So the Typography noWrap works
   },
   toolbar: theme.mixins.toolbar
@@ -55,7 +54,7 @@ function App(props) {
     <div className={classes.root}>
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="title" color="inherit" noWrap>
+          <Typography color="inherit" noWrap>
             Research Platform
           </Typography>
         </Toolbar>
