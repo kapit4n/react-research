@@ -1,20 +1,17 @@
 export default theme => ({
-  cardContain: {
-    width: "100%",
-    display: "inline-block"
-  },
   card: {
-    width: "30%",
-    display: "inline-block"
+    width: 350,
+    display: "inline-block",
+    margin: 10
   },
   media: {
-    height: 100,
-    paddingTop: 16 // 16:9
+    height: 215,
+    paddingTop: 16, // 16:9
+    margin: 10
   },
   fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
+    display: 'block',
+    margin: 10
   },
   appBar: {
     position: "relative"
@@ -25,12 +22,19 @@ export default theme => ({
   textField: {
     marginLeft: 10,
     marginRight: 10,
-    width: "100%"
+    width: "80%"
   },
-  snackbar: {
-    position: "absolute"
+  formControl: {
+    margin: 10,
+    minWidth: 120
   },
-  snackbarContent: {
-    width: 440
+  selectEmpty: {
+    marginTop: 10
+  },
+  chip: {
+    margin: 10
+  },
+  dialog: {
+    padding: 100
   }
-});
+})

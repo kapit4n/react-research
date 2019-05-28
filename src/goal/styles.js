@@ -2,8 +2,7 @@ export default theme => ({
   card: {
     width: 350,
     display: "inline-block",
-    margin: 10,
-    padding: 10
+    margin: 10
   },
   media: {
     height: 215,
@@ -11,9 +10,8 @@ export default theme => ({
     margin: 10
   },
   fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
+    display: 'block',
+    margin: 10
   },
   appBar: {
     position: "relative"
@@ -35,6 +33,8 @@ export default theme => ({
   },
   chip: {
     margin: 10
+  },
+  dialog: {
+    padding: 100
   }
-    
 })

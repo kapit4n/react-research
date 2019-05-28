@@ -9,38 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TextField from "@material-ui/core/TextField";
 
-const styles = theme => ({
-  card: {
-    width: 400,
-    display: "inline-block"
-  },
-  media: {
-    height: 215,
-    paddingTop: 16 // 16:9
-  },
-  fab: {
-    position: "absolute",
-    top: 65,
-    left: 245
-  },
-  appBar: {
-    position: "relative"
-  },
-  flex: {
-    flex: 1
-  },
-  textField: {
-    marginLeft: 10,
-    marginRight: 10,
-    width: "100%"
-  },
-  snackbar: {
-    position: "absolute"
-  },
-  snackbarContent: {
-    width: 360
-  }
-});
+import styles from "./styles";
 
 function NewResearchItem(props) {
   return (
@@ -50,6 +19,7 @@ function NewResearchItem(props) {
         open={props.open}
         onClose={props.handleClose}
         TransitionComponent={props.Transition}
+        className={props.classes.dialog}
       >
         <AppBar className={props.classes.appBar}>
           <Toolbar>
